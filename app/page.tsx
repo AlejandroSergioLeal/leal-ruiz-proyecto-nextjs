@@ -7,7 +7,6 @@ import CarouselSize from "./ui/products/CarouselSize";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { cn } from "@/lib/utils";
 
-
 const ventajas = [
   {
     name:'Entrega inmediata',
