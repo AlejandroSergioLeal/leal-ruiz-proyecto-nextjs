@@ -100,7 +100,7 @@ export default function Home() {
               <span className='text-light-custom-blue-500'> favoritos de siempre</span>
             </h1>
             <p className='mt-6 text-lg max-w-prose text-muted-foreground'>
-              Bienvenido a 'Vinyl Paradise'. Encontrá y disfrutá tu música con la mejor calidad.
+              Bienvenido a Vinyl Paradise. Encontrá y disfrutá tu música con la mejor calidad.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-12 sm:mt-6 ">
             <Link href="/products" className={cn(buttonVariants(), "pointer-events-auto")}>
