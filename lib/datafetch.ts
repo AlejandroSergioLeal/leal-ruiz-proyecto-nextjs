@@ -1,4 +1,4 @@
-//import { sql } from '@vercel/postgres';
+/*import { sql } from '@vercel/postgres';
 const PRODUCTS_PER_PAGE = 5;
 
 
@@ -16,4 +16,4 @@ export async function fetchAllProducts(){
 
 export async function fetchPages(){
 
-}
+}*/
