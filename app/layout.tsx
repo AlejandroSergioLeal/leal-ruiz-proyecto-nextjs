@@ -11,7 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className= {`${montserrat.className} antialiased`}>
+      <body className= {`${montserrat.className} antialiased bg-zinc-50 dark:bg-zinc-900`}>
         <main className= 'relative flex flex-col min-h-screen'>
           <div className='flex-grow flex-1'>
             <Navbar/>
