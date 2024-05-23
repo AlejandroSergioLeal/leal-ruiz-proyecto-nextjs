@@ -3,7 +3,6 @@ import Pagination from '@/app/ui/Pagination'
 import Sidebar from '../ui/products/Sidebar';
 import MaxWidthWrapper from '../ui/MaxWidthWrapper';
 
-
 const TrendingProducts= [{
    name: 'Gangsta 7" Vinyl',
    artist: 'Free Nationals',
