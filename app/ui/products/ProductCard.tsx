@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/lib/definitions";
 
+
 export default function ProductCard({product}: {product: Product})  {
   return (
     <div className="block bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 transform hover:scale-105 cursor-pointer flex-grow">

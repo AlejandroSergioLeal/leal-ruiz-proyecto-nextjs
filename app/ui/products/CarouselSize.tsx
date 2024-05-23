@@ -7,8 +7,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ProductCard from "./ProductCard";
-import { CarouselSizeProps} from "@/lib/definitions";
+import { Product } from "@/lib/definitions";
 
+ interface CarouselSizeProps{
+  products: Product[];
+}  
 
 
 export function CarouselSize({products}: CarouselSizeProps) {
