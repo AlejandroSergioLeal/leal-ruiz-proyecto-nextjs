@@ -5,7 +5,7 @@ import { fetchTest } from '@/lib/datafetch';
 
 const TrendingProducts2 = await fetchTest();
 console.log(TrendingProducts2)
-
+/**/
 export default function ProductsPage() {
     return (
       <>
