@@ -1,11 +1,13 @@
 import Image from "next/image";
-import MaxWidthWrapper from "./ui/MaxWidthWrapper";
+import MaxWidthWrapper from "../components/ui/MaxWidthWrapper";
 import Link from "next/link";
 import {  buttonVariants } from "./ui/button";
 import { Music, ShieldCheck, Truck } from "lucide-react";
 import CarouselSize from "./ui/products/CarouselSize";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { cn } from "@/lib/utils";
+import CustomDivider from "@/components/ui/CustomDivider";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const ventajas = [
   {
@@ -92,17 +94,17 @@ const ClassicProducts= [{
 export default function Home() {
   return (
     <>
-        <AuroraBackground>
-        <MaxWidthWrapper className="mb-1 md:mb-12 lg:mb-0">
+        <AuroraBackground >
+        <MaxWidthWrapper className="mb-1 md:mb-12 lg:mb-0 pb-20 py-20">
           <div className='py-20 mx-auto text-center flex flex-col items-center max-w-3xl'>
-            <h1 className='text-4xl font-bold tracking-tight text-black-900 lg:text-6xl md:text-6xl'>
+            <h1 className='text-4xl py-10 font-bold tracking-tight text-black-900 lg:text-6xl md:text-6xl'>
               Tu mercado digital para tus {' '}
               <span className='text-light-custom-blue-500'> favoritos de siempre</span>
             </h1>
             <p className='mt-6 text-lg max-w-prose text-muted-foreground'>
               Bienvenido a Vinyl Paradise. Encontrá y disfrutá tu música con la mejor calidad.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-12 sm:mt-6 ">
+            <div className="flex flex-col sm:flex-row gap-4 mt-12 sm:mt-6 py-10 ">
             <Link href="/products" className={cn(buttonVariants(), "pointer-events-auto")}>
                 Compra ahora!
             </Link>
@@ -110,13 +112,64 @@ export default function Home() {
           </div>
         </MaxWidthWrapper>
         </AuroraBackground>
-      <section className="md:py-12 py-5 bg-zinc-50 dark:bg-zinc-900 mt-0 ">
-        <div className="max-w-6xl mx-auto bg-zinc-50 dark:bg-zinc-900">
+      
+  <MaxWidthWrapper> 
+  <Carousel className="w-full">
+  <CarouselContent className="mb-2">
+    <CarouselItem className="md:w-1/3 lg:w-1/4">
+      <div className="p-0 h-full flex">
+      <Link href="/products">
+        <Image
+          src="/Brucecarousel.png"
+          height={500}
+          width={1800}
+          alt="Carousel Image"
+          layout="responsive"
+          className="object-cover"
+        />
+      </Link>  
+      </div>
+    </CarouselItem>
+    <CarouselItem className="md:w-1/3 lg:w-1/4">
+      <div className="p-0 h-full flex">
+      <Link href="/products">
+      <Image
+           src="/billiecarousel.png"
+           height={500}
+           width={1800}
+           alt="Carousel Image"
+           />
+      </Link>  
+      </div>
+    </CarouselItem>
+    <CarouselItem className="md:w-1/3 lg:w-1/4">
+      <div className="p-0 h-full flex">
+      <Link href="/products">
+      <Image
+           src="/Amycarousel.png"
+           height={500}
+           width={1800}
+           alt="Carousel Image"
+           />
+      </Link>     
+      </div>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+      
+</MaxWidthWrapper>     
+
+  
+      <section className="md:py-12 py-5 mt-0 ">
+        <div className="max-w-6xl mx-auto">
           <MaxWidthWrapper className="py-2 md:py-10 lg:py-10">
             <h1 className="text-center text-lg text-gray-500 mb-4">Nuestros Best-Sellers</h1>
             <h2 className="text-center text-4xl mb-4 font-bold tracking-tighter sm:text-4xl md:text-5xl">Productos Destacados</h2>
             <CarouselSize products={ClassicProducts} />
           </MaxWidthWrapper>
+          <CustomDivider></CustomDivider>
           <MaxWidthWrapper className="py-2 md:py-10 lg:py-10">
             <h1 className="text-center text-lg text-gray-500 mb-4">Recien Añadidos</h1>
             <h2 className="text-center text-3xl mb-4 font-bold tracking-tighter sm:text-4xl md:text-5xl">Nuevos Lanzamientos</h2>

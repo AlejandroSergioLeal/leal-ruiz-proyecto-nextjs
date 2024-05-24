@@ -1,8 +1,7 @@
 import '@/app/ui/globals.css';
 import {montserrat} from '@/app/ui/fonts';
 import Footer from './ui/Footer';
-import Navbar from './ui/Navbar';
-import { AuroraBackground } from '@/components/ui/aurora-background';
+import Navbar from '../components/ui/Navbar';
 
 export default function RootLayout({
   children,

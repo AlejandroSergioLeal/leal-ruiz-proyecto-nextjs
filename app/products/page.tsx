@@ -1,7 +1,7 @@
 import ProductsWrapper from '../ui/products/ProductsWrapper';
-import Pagination from '@/app/ui/Pagination'
+import Pagination from '@/components/ui/Pagination'
 import Sidebar from '../ui/products/Sidebar';
-import MaxWidthWrapper from '../ui/MaxWidthWrapper';
+
 
 
 const TrendingProducts= [{
