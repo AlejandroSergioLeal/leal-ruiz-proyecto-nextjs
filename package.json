@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node -r dotenv/config ./scripts/seed2.js"
+    "seed": "node -r dotenv/config ./scripts/seed.js",
+    "crear_tablas": "node -r dotenv/config ./scripts/crear_tablas.js"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.4",
