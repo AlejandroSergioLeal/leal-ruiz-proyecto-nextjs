@@ -6,7 +6,6 @@ import { Music, ShieldCheck, Truck } from "lucide-react";
 import CarouselSize from "./ui/products/CarouselSize";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { cn } from "@/lib/utils";
-import CustomDivider from "@/components/ui/CustomDivider";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const ventajas = [
@@ -116,7 +115,7 @@ export default function Home() {
         <Carousel className="w-full">
           <CarouselContent className="mb-2">
           <CarouselItem className="md:w-1/3 lg:w-1/4">
-            <div className="p-0 h-full flex">
+            <div className="p-0 h-full flex items-start md:items-center">
              <Link href="/products">
               <Image
                 src="/Brucecarousel.png"
@@ -129,7 +128,7 @@ export default function Home() {
           </CarouselItem>
         
       <CarouselItem className="md:w-1/3 lg:w-1/4">
-        <div className="p-0 h-full flex">
+        <div className="p-0 h-full flex items-start md:items-center">
           <Link href="/products">
             <Image
               src="/billiecarousel.png"
@@ -142,7 +141,7 @@ export default function Home() {
       </CarouselItem>
     
       <CarouselItem className="md:w-1/3 lg:w-1/4">
-        <div className="p-0 h-full flex">
+        <div className="p-0 h-full flex items-start md:items-center">
           <Link href="/products">
             <Image
               src="/david_bowiecarousel.png"
@@ -161,9 +160,9 @@ export default function Home() {
 
 
   
-      <section className="md:py-12 py-5 mt-0 bg-gray-200 ">
+      <section className="md:py-12 py-5  bg-gray-200 ">
         <div className="max-w-6xl mx-auto ">
-          <MaxWidthWrapper className="py-2 md:py-10 lg:py-10 ">
+          <MaxWidthWrapper className="py-2 md:py-10 lg:py-10 mt-5 ">
             <h1 className="text-center text-lg text-black mb-4">Nuestros Best-Sellers</h1>
             <h2 className="text-center text-4xl mb-4 font-bold tracking-tighter sm:text-4xl md:text-5xl">Productos Destacados</h2>
             <CarouselSize products={ClassicProducts} />
@@ -172,11 +171,11 @@ export default function Home() {
       </section>  
       
        
-      <section>
-          <MaxWidthWrapper className="py-2 md:py-5 lg:py-10">
-            <div className="flex flex-col-reverse md:flex-row items-center justify-between">
+      <section >
+          <MaxWidthWrapper className="py-2 md:py-5 lg:py-10 ">
+            <div className="flex flex-col-reverse md:flex-row items-center justify-between mt-10">
               <div className="flex-1 text-center md:text-left md:mb-0 mb-4">
-                <h1 className="mt-4 md:mt-0 text-3xl font-bold tracking-tighter sm:text-xl md:text-4xl">
+                <h1 className=" md:mt-0 text-3xl font-bold tracking-tighter sm:text-xl md:text-4xl">
                   Descubrí nuestra colección exclusiva
                  </h1>
                 <h2 className="text-lg text-black mt-4">
@@ -192,7 +191,7 @@ export default function Home() {
                 height={500}
                 width={500}
                 alt="Carousel Image"
-                className="object-right"
+                className="object-right mt-10"
              />
             </div>
          </div>
