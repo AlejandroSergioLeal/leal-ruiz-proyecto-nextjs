@@ -1,90 +1,120 @@
 const { db } = require('@vercel/postgres');
 const bcrypt = require('bcrypt');
-
-async function createTables(client){
-    try{
-        await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-        //Tabla de productos:
-       const createEnumType = `
-            DO $$ BEGIN
-                CREATE TYPE product_format AS ENUM ('LP', 'EP', 'Single', 'BoxSet');
-            EXCEPTION
-                WHEN duplicate_object THEN null;
-            END $$;
-`;
+async function createProductsTable(client) {
+    try {
         const createProductsTable = await client.sql`
             CREATE TABLE IF NOT EXISTS products (
-                product_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+                product_id SERIAL PRIMARY KEY,
                 name VARCHAR(127) NOT NULL, 
                 artist VARCHAR(127) NOT NULL,
                 image VARCHAR(255) NOT NULL,
                 price DECIMAL(4, 2) NOT NULL,
                 state BOOLEAN NOT NULL,
                 description VARCHAR(255) NOT NULL,
-                genre UUID NOT NULL,
-                format product_format NOT NULL,
-                release_data DATE NOT NULL,
+                genre VARCHAR(255) NOT NULL,
+                format VARCHAR(127) NOT NULL,
+                release_date DATE NOT NULL,
                 sold INT NOT NULL
             );`
-        
-        //Tabla de categorias
-        const createGenreTable = await client.sql`
-    |       CREATE TABLE IF NOT EXISTS genres (
-                genre_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                name VARCHAR(127) NOT NULL
-            );`
-        
-        //Tabla de usuarios
-        const createUserTable = await client.sql`
-            CREATE TABLE IF NOT EXISTS users_vinylparadise (
-                user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                name VARCHAR(127) NOT NULL,
-                lastname VARCHAR(127) NOT NULL,
-                e_mail VARCHAR(127) NOT NULL,
-                admin BOOLEAN NOT NULL
-            );`
-
-        //Tabla de imagenes
-        const createProductImagesTable = await client.sql`
-    |       CREATE TABLE IF NOT EXISTS productImages (
-                productImg_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                product_id UUID NOT NULL,
-                assetId INT NOT NULL,
-                url VARCHAR(255) NOT NULL
-            );`
-        
-        //Tabla de ventas 
-        const createSalesTable = await client.sql`
-            CREATE TABLE IF NOT EXISTS sales(
-                sale_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                date DATE NOT NULL,
-                t_ID_MP VARCHAR(255) NOT NULL,
-                person_email VARCHAR(255) NOT NULL
-            )
-        `
-        //Tabla detalles ventas 
-        const createSalesDetailsTable = await client.sql`
-            CREATE TABLE IF NOT EXISTS sales_details(
-                sale_details_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                price DECIMAL(4,2) NOT NULL,
-                quantity INT NOT NULL, 
-                subtotal DECIMAL(4,2) NOT NULL,
-                sale_id UUID NOT NULL,
-                product_id UUID NOT NULL
-            )
-        `
 
     }
-    catch (error){
-        console.error('Error creado tablas.',error);
+    catch (error) {
+        console.error('Error creado tablas.', error);
         throw error;
     }
 }
 
+async function createProductImagesTable(client) {
+    try {
+        //Tabla de imagenes
+        const createProductImagesTable = await client.sql`
+        CREATE TABLE IF NOT EXISTS productImages (
+            productImg_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            product_id UUID NOT NULL,
+            assetId INT NOT NULL,
+            url VARCHAR(255) NOT NULL
+        );`
+    }
+    catch (error) {
+        console.error('Error creado tablas.', error);
+        throw error;
+    }
+}
+
+async function createGenreTable(client) {
+    try {
+        //Tabla de categorias
+        const createGenreTable = await client.sql`
+            CREATE TABLE IF NOT EXISTS genres (
+                genre_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+                name VARCHAR(127) NOT NULL
+            );`
+    }
+    catch (error) {
+        console.error('Error creado tablas.', error);
+        throw error;
+    }
+}
+
+async function createSalesTable(client) {
+    try {
+        const createSalesTable = await client.sql`
+        CREATE TABLE IF NOT EXISTS sales(
+            sale_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            date DATE NOT NULL,
+            t_ID_MP VARCHAR(255) NOT NULL,
+            person_email VARCHAR(255) NOT NULL
+        )
+    `
+    }
+    catch (error) {
+        console.error('Error creado tablas.', error);
+        throw error;
+    }
+}
+async function createSalesDetailsTable(client) {
+    try {
+        const createSalesDetailsTable = await client.sql`
+        CREATE TABLE IF NOT EXISTS sales_details(
+            sale_details_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            price DECIMAL(4,2) NOT NULL,
+            quantity INT NOT NULL, 
+            subtotal DECIMAL(4,2) NOT NULL,
+            sale_id UUID NOT NULL,
+            product_id UUID NOT NULL
+        );
+    `
+    }
+    catch (error) {
+        console.error('Error creado tablas.', error);
+        throw error;
+    }
+}
+
+async function createUserTable(client) {
+    try {
+        const createUserTable = await client.sql`
+        CREATE TABLE IF NOT EXISTS users_vinylparadise (
+            user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            name VARCHAR(127) NOT NULL,
+            lastname VARCHAR(127) NOT NULL,
+            e_mail VARCHAR(127) NOT NULL,
+            admin BOOLEAN NOT NULL
+        );`
+    }
+    catch (error) {
+        console.error('Error creado tablas.', error);
+        throw error;
+    }
+}
 async function main() {
     const client = await db.connect();
-    //createTables(client);
+    await createProductsTable(client);
+    //await createGenreTable(client);
+    //await createUserTable(client);
+    //await createSalesTable(client);
+    //await createSalesDetailsTable(client);
+    //await createProductImagesTable(client);
     await client.end();
 }
 

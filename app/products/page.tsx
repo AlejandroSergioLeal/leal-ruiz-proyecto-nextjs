@@ -1,9 +1,9 @@
 import ProductsWrapper from '../ui/products/ProductsWrapper';
 import Pagination from '@/components/ui/Pagination'
 import Sidebar from '../ui/products/Sidebar';
-import { fetchTest } from '@/lib/datafetch';
+import * as dao from '@/lib/productDAO'
 
-const TrendingProducts2 = await fetchTest();
+const TrendingProducts2 = await dao.getAllProducts();
 console.log(TrendingProducts2)
 /**/
 export default function ProductsPage() {

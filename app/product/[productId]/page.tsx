@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/button'
 import MaxWidthWrapper from '@/components/ui/MaxWidthWrapper'
-import { fetchProductById } from '@/lib/datafetch'
+import * as dao from '@/lib/productDAO'
 import React from 'react'
 import Image from 'next/image'
 
 
 
-export default async function ProductPage({ params }: { params: { productId: string } }) {
+export default async function ProductPage({ params }: { params: { productId: number } }) {
     const pId = params.productId
-    const producto = await fetchProductById(pId)
+    const producto = await dao.getProductById(pId)
     console.log(producto)
     return (
     <MaxWidthWrapper>
