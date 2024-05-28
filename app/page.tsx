@@ -7,6 +7,7 @@ import CarouselSize from "./ui/products/CarouselSize";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { cn } from "@/lib/utils";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Product } from "@/lib/definitions";
 
 const ventajas = [
   {
@@ -27,7 +28,7 @@ const ventajas = [
   }
 ]
 
-const TrendingProducts = [{
+const TrendingProducts : Product[]= [{
   product_id: 1,
   name: 'Gangsta 7" Vinyl',
   artist: 'Free Nationals',
@@ -101,7 +102,7 @@ const TrendingProducts = [{
   sold: 0
 }]
 
-const ClassicProducts = [{
+const ClassicProducts: Product[]= [{
   product_id: 7,
   name: 'Live at BBC Special Edition',
   artist: 'Pink Floyd',
