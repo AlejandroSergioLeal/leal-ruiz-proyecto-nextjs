@@ -7,7 +7,6 @@ import { Product } from "@/lib/definitions";
 export default function ProductCard({product}: {product: Product})  {
   return (
     <div className="block bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 transform hover:scale-105 cursor-pointer flex-grow">
-      console.log(product)
       <Link href={`/product/${product.product_id}`}>
         <div className="flex flex-col h-full w-full">
           <div className="p-4 flex-shrink-0">

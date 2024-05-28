@@ -27,67 +27,129 @@ const ventajas = [
   }
 ]
 
-const TrendingProducts= [{
-   name: 'Gangsta 7" Vinyl',
-   artist: 'Free Nationals',
-   price: 22.99,
-   image: '/free_1.png'
+const TrendingProducts = [{
+  product_id: 1,
+  name: 'Gangsta 7" Vinyl',
+  artist: 'Free Nationals',
+  price: 22.99,
+  image: '/free_1.png',
+  state: true,
+  description: 'Limited edition 7" vinyl featuring exclusive tracks.',
+  genre: 'Hip Hop',
+  format: 'Vinyl',
+  release_date: '2022-05-20',
+  sold: 0
 }, {
-   name: 'FAMILY LP',
-   artist: 'DJ Scheme',
-   price: 20.99,
-   image: '/Scheme_1.png'
-}
-, {
-   name: 'Wont He Do It Vinyl (Bone)',
-   artist: 'Conway the Machine',
-   price: 24.99,
-   image: '/ConwaytheMachine_1.png'
-}
-, {
+  product_id: 2,
+  name: 'FAMILY LP',
+  artist: 'DJ Scheme',
+  price: 20.99,
+  image: '/Scheme_1.png',
+  state: true,
+  description: 'Debut LP from DJ Scheme with guest features.',
+  genre: 'Hip Hop',
+  format: 'Vinyl',
+  release_date: '2021-10-15',
+  sold: 0
+}, {
+  product_id: 3,
+  name: 'Wont He Do It Vinyl (Bone)',
+  artist: 'Conway the Machine',
+  price: 24.99,
+  image: '/ConwaytheMachine_1.png',
+  state: true,
+  description: 'Special edition bone-colored vinyl from Conway the Machine.',
+  genre: 'Hip Hop',
+  format: 'Vinyl',
+  release_date: '2023-03-17',
+  sold: 0
+}, {
+  product_id: 4,
   name: 'Glockoma 2 Vinyl (Deluxe)',
   artist: 'Key Glock',
   price: 23.99,
-  image: '/Key_1.png'
-}
-, {
+  image: '/Key_1.png',
+  state: true,
+  description: 'Deluxe edition of Glockoma 2 with bonus tracks.',
+  genre: 'Hip Hop',
+  format: 'Vinyl',
+  release_date: '2022-11-11',
+  sold: 0
+}, {
+  product_id: 5,
   name: 'You Only Live 2wice Vinyl',
   artist: 'Freddie Gibbs',
   price: 23.99,
-  image: '/FreddieGibbs_1.png'
-}
-, {
+  image: '/FreddieGibbs_1.png',
+  state: true,
+  description: 'Freddie Gibbs’ second studio album on vinyl.',
+  genre: 'Hip Hop',
+  format: 'Vinyl',
+  release_date: '2021-06-25',
+  sold: 0
+}, {
+  product_id: 6,
   name: 'U Wasnt There',
   artist: 'Camron & A-Trak',
   price: 23.99,
-  image: '/Camron_1.png'
-}
-]
+  image: '/Camron_1.png',
+  state: true,
+  description: 'Collaboration album between Camron & A-Trak.',
+  genre: 'Hip Hop',
+  format: 'Vinyl',
+  release_date: '2022-04-09',
+  sold: 0
+}]
 
-const ClassicProducts= [{
+const ClassicProducts = [{
+  product_id: 7,
   name: 'Live at BBC Special Edition',
   artist: 'Pink Floyd',
   price: 22.99,
-  image: '/pink_floyd_1.png'
+  image: '/pink_floyd_1.png',
+  state: true,
+  description: 'Special edition live recordings from Pink Floyd.',
+  genre: 'Rock',
+  format: 'Vinyl',
+  release_date: '1970-12-20',
+  sold: 0
 }, {
+  product_id: 8,
   name: 'Nevermind Deluxe Edition',
   artist: 'Nirvana',
   price: 20.99,
-  image: '/nirvana_1.png'
-}
-, {
+  image: '/nirvana_1.png',
+  state: true,
+  description: 'Deluxe edition of Nirvana’s Nevermind.',
+  genre: 'Rock',
+  format: 'Vinyl',
+  release_date: '1991-09-24',
+  sold: 0
+}, {
+  product_id: 9,
   name: 'Appetite for Destruction',
   artist: 'Guns N’ Roses',
   price: 24.99,
-  image: '/guns_1.png'
-}
-, {
- name: 'Live at Racket,NYC: Limited',
- artist: 'The Rolling Stones',
- price: 23.99,
- image: '/Rstones-1.png'
-}
-]
+  image: '/guns_1.png',
+  state: true,
+  description: 'Classic debut album from Guns N’ Roses.',
+  genre: 'Rock',
+  format: 'Vinyl',
+  release_date: '1987-07-21',
+  sold: 0
+}, {
+  product_id: 10,
+  name: 'Live at Racket, NYC: Limited',
+  artist: 'The Rolling Stones',
+  price: 23.99,
+  image: '/Rstones-1.png',
+  state: true,
+  description: 'Limited edition live performance from The Rolling Stones.',
+  genre: 'Rock',
+  format: 'Vinyl',
+  release_date: '1969-11-10',
+  sold: 0
+}]
 
 
 export default function Home() {
