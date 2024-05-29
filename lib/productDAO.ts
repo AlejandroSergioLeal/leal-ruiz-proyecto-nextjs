@@ -13,6 +13,7 @@ export async function insertProduct(product: Omit<Product, 'product_id'>): Promi
      VALUES (${name},${artist},${image},${price},${state},
      ${description},${genre},${format},${release_date},${sold})
      RETURNING *`
+     console.log(`insertado: ${name}`)
     return result.rows[0];
   }
   catch (error) {
@@ -58,6 +59,31 @@ export async function getAllProducts(): Promise<Product[]> {
   }
 }
 
+export async function getMostRecentProducts(cant: number): Promise<Product[]> {
+  try {
+    noStore();
+    const result = await sql<Product>`SELECT * FROM products ORDER BY release_date DESC LIMIT ${cant}`
+    return result.rows;
+  }
+  catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch.');
+  }
+}
+
+//retorna los productos con ventas mayor o iguales a amount
+export async function getProductsByMinSales(amount : number){
+  try {
+    noStore();
+    const result = await sql<Product>`SELECT * FROM products WHERE sold > ${amount-1}`
+    return result.rows;
+  }
+  catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch.');
+  }
+}
+
 export async function updateProduct(product_id: number, updates: Product): Promise<Product> {
   try {
     throw new Error("update sin implementar")
@@ -87,5 +113,31 @@ export async function deleteProduct(product_id: number) {
   catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch.');
+  }
+}
+
+//funciones auxiliares que seguro no vamos a usar mas:
+
+export async function borrarDuplicados(){
+  try {
+    noStore();
+    await sql`
+      WITH duplicates AS (
+        SELECT 
+            product_id,
+            ROW_NUMBER() OVER (PARTITION BY name ORDER BY product_id) AS row_num
+        FROM 
+            products
+      )
+      DELETE FROM products
+      WHERE product_id IN (
+          SELECT product_id
+        FROM duplicates
+        WHERE row_num > 1
+      );`
+  }
+  catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to delete.');
   }
 }

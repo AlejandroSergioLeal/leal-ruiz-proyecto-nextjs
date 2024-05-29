@@ -4,7 +4,7 @@ import Sidebar from '../ui/products/Sidebar';
 import * as dao from '@/lib/productDAO'
 
 const TrendingProducts2 = await dao.getAllProducts();
-console.log(TrendingProducts2)
+console.log(`total de productos en bd: ${TrendingProducts2.length}`)
 /**/
 export default function ProductsPage() {
     return (
