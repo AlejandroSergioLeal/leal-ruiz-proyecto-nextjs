@@ -5,6 +5,7 @@ import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
+
 const pruebaTracklist = [
 "Turkish Cotton",
 "89 Earthquake",
@@ -18,6 +19,7 @@ const pruebaTracklist = [
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
+  
 
   return (
     <MaxWidthWrapper>
