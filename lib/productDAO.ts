@@ -141,3 +141,27 @@ export async function borrarDuplicados(){
     throw new Error('Failed to delete.');
   }
 }
+
+export async function fetchFilteredProducts (
+  query: string,
+  currentPage: number,
+){
+  try {
+    noStore();
+    const itemsPerPage = 10; 
+    const offset = (currentPage - 1) * itemsPerPage;
+
+    const result = await sql<Product>`
+      SELECT * FROM products
+      WHERE 
+        name ILIKE ${`%${query}%`} OR
+        artist ILIKE ${`%${query}%`}
+      LIMIT ${itemsPerPage} OFFSET ${offset};
+    `;
+    return result.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+  }
+
+  }
