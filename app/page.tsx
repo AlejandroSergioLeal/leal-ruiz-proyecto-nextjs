@@ -11,24 +11,7 @@ import CarouselSection from "./ui/CarouselSection";
 import ProductsSection from "./ui/products/ProductsSection";
 import HeroSection from "./ui/HeroSection";
 import AdvantagesSection from "./ui/AdvantagesSection";
-const ventajas = [
-  {
-    name:'Entrega inmediata',
-    Icon: Truck,
-    description:'Recibí tus pedidos en tu domicilio en menos de 24 horas y de manera gratuita.'
-  },
-  {
-    name:'Variedad de épocas y estilos',
-    Icon: Music,
-    description:'Encontrarás una amplia variedad de música que abarca todas las épocas y géneros musicales. Desde los clásicos más icónicos hasta las últimas tendencias.'
-  },
-   
-  {
-    name:'Calidad superior',
-    Icon: ShieldCheck,
-    description:'Descubrí nuestra selección de discos de vinilo de alta calidad, preservados para ofrecerte una experiencia auditiva excepcional.'
-  }
-]
+
 
 const BestSellers : Product[]= await datafetch.getBestSellers();
 const RecentProducts: Product[]= await datafetch.getMostRecentProducts(6);
@@ -41,9 +24,7 @@ export default function Home() {
     <>
        
     <HeroSection/>
-    <CarouselSection/>  
     <ProductsSection title="Nuestros Best-Sellers" subtitle="Productos Destacados" products={BestSellers} />
-       
     <section >
           <MaxWidthWrapper className="py-2 md:py-5 lg:py-10 ">
             <div className="flex flex-col-reverse md:flex-row items-center justify-between mt-10">
