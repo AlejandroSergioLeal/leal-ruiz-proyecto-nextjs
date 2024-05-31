@@ -20,6 +20,7 @@ export default function SearchBar({ placeholder }: { placeholder: string }) {
     } else{
         params.delete('query')
     }
+      params.set('page', '1')
 
     replace(`${pathName}?${params.toString()}`)
   },WAIT_BETWEEN_SEARCH)

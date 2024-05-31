@@ -142,13 +142,14 @@ export async function borrarDuplicados(){
   }
 }
 
+const itemsPerPage = 12; 
 export async function fetchFilteredProducts (
   query: string,
   currentPage: number,
 ){
   try {
     noStore();
-    const itemsPerPage = 10; 
+   
     const offset = (currentPage - 1) * itemsPerPage;
 
     const result = await sql<Product>`
@@ -161,7 +162,26 @@ export async function fetchFilteredProducts (
     return result.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch products.');
   }
 
+  }
+
+  
+  export async function fetchTotalPages(query: string) {
+    noStore();
+    try {
+      const count = await sql`SELECT COUNT(*)
+      FROM products
+      WHERE
+      name ILIKE ${`%${query}%`} OR
+      artist ILIKE ${`%${query}%`}
+    `;
+  
+      const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
+      return totalPages;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total number of products.');
+    }
   }
