@@ -27,7 +27,7 @@ export default async function ProductsPage({
     <>
       <div className="bg-zinc-50 dark:bg-zinc-900 container mx-auto py-12 px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8">
-          <Sidebar />
+          <Sidebar/>
           <div className="mt-4 flex flex-col gap-2 md:mt-8">
               <div className="mb-6">
                 <SearchBar placeholder="Search..." />
@@ -38,7 +38,7 @@ export default async function ProductsPage({
           </div>
         </div>
         <div className="flex justify-center my-8">
-          <Pagination totalPages={totalPages} />
+            <Pagination totalPages={totalPages} />
         </div>
       </div>
     </>
