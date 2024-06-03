@@ -1,7 +1,7 @@
 const { db } = require('@vercel/postgres');
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
-import { Product } from './definitions';
+import { Product, User } from './definitions';
 import { UUID } from 'crypto';
 
 export async function insertProduct(product: Omit<Product, 'product_id'>): Promise<Product> {
@@ -116,7 +116,19 @@ export async function deleteProduct(product_id: number) {
   }
 }
 
-//funciones auxiliares que seguro no vamos a usar mas:
+export async function getUser(email: string) : Promise<User>{
+  try {
+    noStore();
+    const result = await sql<User>`SELECT * FROM users WHERE e_mail = ${email}`
+    return result.rows[0];
+  }
+  catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch.');
+  }
+}
+
+//funciones auxiliares 
 
 export async function borrarDuplicados(){
   try {

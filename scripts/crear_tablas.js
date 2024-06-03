@@ -94,11 +94,12 @@ async function createSalesDetailsTable(client) {
 async function createUserTable(client) {
     try {
         const createUserTable = await client.sql`
-        CREATE TABLE IF NOT EXISTS users_vinylparadise (
-            user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS users (
+            id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
             name VARCHAR(127) NOT NULL,
             lastname VARCHAR(127) NOT NULL,
             e_mail VARCHAR(127) NOT NULL,
+            password VARCHAR(127) NOT NULL,
             admin BOOLEAN NOT NULL
         );`
     }
@@ -107,11 +108,23 @@ async function createUserTable(client) {
         throw error;
     }
 }
+
+async function createUser(client,name,lname,email,pswd,adm){
+    const hashpw = await bcrypt.hash(pswd, 10);
+    const user = await client.sql`
+    INSERT INTO users (id, name, lastname, e_mail, password,admin)
+    VALUES (uuid_generate_v4(), ${name}, ${lname},${email}, ${hashpw},${adm})
+    ON CONFLICT (id) DO NOTHING;`
+  
+}
+
 async function main() {
     const client = await db.connect();
-    await createProductsTable(client);
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    //await createProductsTable(client);
     //await createGenreTable(client);
     //await createUserTable(client);
+    //await createUser(client,"Ale","Leal","iaw2024@correo.com","sasasasa",true);
     //await createSalesTable(client);
     //await createSalesDetailsTable(client);
     //await createProductImagesTable(client);

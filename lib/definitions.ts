@@ -1,3 +1,10 @@
+export type User = {
+  id?: string,
+  name: string,
+  e_mail: string,
+  password: string,
+  admin: boolean
+}
 
 export type Product = {
   product_id: number,

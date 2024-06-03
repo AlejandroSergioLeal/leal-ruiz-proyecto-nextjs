@@ -2,7 +2,17 @@ import React from 'react'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import Link from 'next/link'
 import { Icons } from '../../app/ui/Icons'
-import { ShoppingCart, UserRound } from 'lucide-react'
+import { ShoppingCart, UserRound, LogOut, LucideLogOut } from 'lucide-react'
+import { signOut } from '@/auth';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const Navbar = () => {
   return (
@@ -15,10 +25,20 @@ const Navbar = () => {
               vinyl <span className='text-light-custom-blue-500'> paradise </span>
             </Link>
           </div>
-          <div className='flex items-center space-x-4 md:mr-0 md:ml-auto'> 
+          <div className='flex items-center space-x-4 md:mr-0 md:ml-auto'>
             <Link href='/login' className='flex items-center gap-1 mr-10 '>
               <UserRound className='w-5 h-5 transform transition-transform duration-200 hover:scale-110' />
             </Link>
+            <form
+              action={async () => {
+                'use server';
+                await signOut();
+              }}
+            >
+              <button>
+                <LogOut className='w-5 h-5 transform transition-transform duration-200 hover:scale-110' />
+              </button>
+            </form>
             <Link href='/shopping-cart' className='flex items-center space-x-4 '>
               <ShoppingCart className='w-5 h-5 transform transition-transform duration-200 hover:scale-110' />
             </Link>
