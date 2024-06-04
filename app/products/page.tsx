@@ -1,14 +1,14 @@
 
 import React, { Suspense } from 'react';
-import ProductsWrapper from '../ui/products/ProductsWrapper';
-import Pagination from '@/components/ui/Pagination';
-import Sidebar from '../ui/products/Sidebar';
-import * as dao from '@/lib/productDAO';
-import SearchBar from '../ui/search';
-import { SkeletonProductWrapper } from '../ui/skeletons';
+import ProductsWrapper from './ui/ProductsWrapper';
+import Pagination from './ui/Pagination';
+import Sidebar from './ui/Sidebar';
+import * as dao from '@/lib/dao';
+import SearchBar from './ui/search';
+import { SkeletonProductWrapper } from './ui/skeletons';
 
-const TrendingProducts2 = await dao.getAllProducts();
-console.log(`total de productos en bd: ${TrendingProducts2.length}`);
+const productlist = await dao.getAllProducts();
+console.log(`total de productos en bd: ${productlist.length}`);
 
 export default async function ProductsPage({
   searchParams

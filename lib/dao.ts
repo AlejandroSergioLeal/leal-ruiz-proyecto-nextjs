@@ -2,7 +2,6 @@ const { db } = require('@vercel/postgres');
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Product, User } from './definitions';
-import { UUID } from 'crypto';
 
 export async function insertProduct(product: Omit<Product, 'product_id'>): Promise<Product> {
   try {

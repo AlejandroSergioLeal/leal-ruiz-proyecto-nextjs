@@ -1,5 +1,5 @@
 import React from 'react'
-import MaxWidthWrapper from './MaxWidthWrapper'
+import MaxWidthWrapper from '../../app/ui/MaxWidthWrapper'
 import Link from 'next/link'
 import { Icons } from '../../app/ui/Icons'
 import { ShoppingCart, UserRound, LogOut, LucideLogOut } from 'lucide-react'

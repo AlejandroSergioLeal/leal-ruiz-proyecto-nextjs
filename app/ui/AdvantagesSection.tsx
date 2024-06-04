@@ -1,5 +1,5 @@
 
-import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper";
+import MaxWidthWrapper from "@/app/ui/MaxWidthWrapper";
 import { Music, ShieldCheck, Truck } from "lucide-react";
 
 const ventajas = [

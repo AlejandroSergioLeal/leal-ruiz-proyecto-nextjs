@@ -1,7 +1,7 @@
 import React from 'react';
 import CarouselSize from './CarouselSize';
 import { Product } from '@/lib/definitions'; 
-import MaxWidthWrapper from '@/components/ui/MaxWidthWrapper';
+import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper';
 
 interface ProductsSectionProps {
   title: string;

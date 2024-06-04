@@ -1,28 +1,25 @@
 import Image from "next/image";
-import MaxWidthWrapper from "../components/ui/MaxWidthWrapper";
+import MaxWidthWrapper from "./ui/MaxWidthWrapper";
 import Link from "next/link";
 import {  buttonVariants } from "./ui/button";
-import { Music, ShieldCheck, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import * as dao from"@/lib/dao"
 import { Product } from "@/lib/definitions";
-import {enBd} from '@/lib/pruebasBaseDatos'
-import * as datafetch from "@/lib/datafetchs";
-import CarouselSection from "./ui/CarouselSection";
-import ProductsSection from "./ui/products/ProductsSection";
+import ProductsSection from "./ui/ProductsSection";
 import HeroSection from "./ui/HeroSection";
 import AdvantagesSection from "./ui/AdvantagesSection";
 
 
-const BestSellers : Product[]= await datafetch.getBestSellers();
-const RecentProducts: Product[]= await datafetch.getMostRecentProducts(6);
 
-//Para hacer pruebas en la bd (temporal):
-enBd()
+const ventas_minimas_best_sellers = 80;
+const cant_mas_recientes = 6;
+
+const BestSellers : Product[]= await dao.getProductsByMinSales(ventas_minimas_best_sellers)
+const RecentProducts: Product[]= await dao.getMostRecentProducts(cant_mas_recientes);
 
 export default function Home() {
   return (
     <>
-       
     <HeroSection/>
     <ProductsSection title="Nuestros Best-Sellers" subtitle="Productos Destacados" products={BestSellers} />
     <section >

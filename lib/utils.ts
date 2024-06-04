@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-
+import { Product } from "./definitions";
+import * as dao from "@/lib/dao"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }

@@ -1,6 +1,6 @@
 import { Button, buttonVariants } from '@/app/ui/button'
-import MaxWidthWrapper from '@/components/ui/MaxWidthWrapper'
-import * as dao from '@/lib/productDAO'
+import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper'
+import * as dao from '@/lib/dao'
 import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'

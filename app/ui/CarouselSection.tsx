@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper";
+import MaxWidthWrapper from "@/app/ui/MaxWidthWrapper";
 
 export default function CarouselSection() {
   return (

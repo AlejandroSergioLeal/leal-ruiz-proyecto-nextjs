@@ -1,8 +1,5 @@
-import {  Product} from "@/lib/definitions";
-import ProductCard from "./ProductCard";
-import * as dao from '@/lib/productDAO';
-
-
+import ProductCard from "../../ui/ProductCard";
+import * as dao from '@/lib/dao';
 
 export default async function ProductsWrapper({
   query,

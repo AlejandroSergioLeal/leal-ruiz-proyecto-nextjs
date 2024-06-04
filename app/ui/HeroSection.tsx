@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import MaxWidthWrapper from "@/components/ui/MaxWidthWrapper";
+import MaxWidthWrapper from "@/app/ui/MaxWidthWrapper";
 import { buttonVariants } from "./button";
 
 
