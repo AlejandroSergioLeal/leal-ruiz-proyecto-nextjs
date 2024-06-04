@@ -5,15 +5,6 @@ import { Icons } from '../../app/ui/Icons'
 import { ShoppingCart, UserRound, LogOut, LucideLogOut } from 'lucide-react'
 import { signOut } from '@/auth';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
 const Navbar = () => {
   return (
     <nav className='sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-200 bg-gray-300/55 backdrop-blur-lg transition-all'>
