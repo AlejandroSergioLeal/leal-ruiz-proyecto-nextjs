@@ -1,9 +1,11 @@
+
 import { Button, buttonVariants } from '@/app/ui/button'
 import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper'
 import * as dao from '@/lib/dao'
-import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import CartButton from '@/app/ui/ButtonCart'
+
 
 const pruebaTracklist = [
   "Turkish Cotton",
@@ -15,9 +17,12 @@ const pruebaTracklist = [
   "Porsches in Spanish"
 ];
 
+
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
+  
+  
 
   return (
     <MaxWidthWrapper>
@@ -40,7 +45,7 @@ export default async function ProductPage({ params }: { params: { productId: num
             <p className="text-gray-800 dark:text-gray-400 font-bold">{producto.artist}</p>
           </div>
           <div className="grid gap-2 mt-4">
-            <Button className={cn(buttonVariants({ variant: 'destructive' }), 'mt-4')}>Añadir al carrito</Button>
+            <CartButton product={producto}></CartButton>
           </div>
           <div className="grid gap-2 mt-4">
             <h3 className="text-xl font-semibold underline text-gray-800 dark:text-gray-200">Género:</h3>

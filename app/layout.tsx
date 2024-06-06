@@ -2,6 +2,7 @@ import '@/app/ui/globals.css';
 import {montserrat} from '@/app/ui/fonts';
 import Footer from './ui/Footer';
 import Navbar from '../components/ui/Navbar';
+import { CartProvider } from './context/cart';
 
 export default function RootLayout({
   children,
@@ -9,7 +10,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
+   <CartProvider>
+   <html lang="en" className="h-full">
       <body className= {`${montserrat.className} antialiased `}>
         <main className= 'relative flex flex-col min-h-screen'>
           <div className='flex-grow flex-1'>
@@ -20,6 +22,7 @@ export default function RootLayout({
         </main>
       </body>
     </html>
+   </CartProvider>
   );
 }
  
