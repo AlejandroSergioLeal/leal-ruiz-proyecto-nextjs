@@ -25,7 +25,7 @@ export default async function ProductsPage({
   const totalPages = await dao.fetchTotalPages(query);
   return (
     <>
-      <div className="bg-zinc-50 dark:bg-zinc-900 container mx-auto py-12 px-4 md:px-6">
+      <div className="bg-zinc-50 container mx-auto py-12 px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8">
           <Sidebar/>
           <div className="mt-4 flex flex-col gap-2 md:mt-8">

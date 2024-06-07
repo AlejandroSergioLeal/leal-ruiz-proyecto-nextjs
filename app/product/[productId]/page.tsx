@@ -4,20 +4,21 @@ import * as dao from '@/lib/dao'
 import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+//import { LastFmAlbumInfo, LastFmTrack } from '@/lib/definitions'
+import { getAlbumInfo } from '@/lastfm'
 
-const pruebaTracklist = [
-  "Turkish Cotton",
-  "89 Earthquake",
-  "Solid Plan (feat. Action Bronson)",
-  "Palisades, CA (feat. Big Sean)",
-  "Summer Reign (feat. Ty Dolla $ign)",
-  "Orange Village (feat. Slum Village)",
-  "Porsches in Spanish"
-];
+interface Track{
+  name: string
+  duration: string
+}
 
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
+  const albuminfo = await getAlbumInfo(producto.artist, producto.name);
+  let tracklist : string[] = [];
+
+  albuminfo.album.tracks.track.forEach((track : Track)  => {tracklist.push(track.name)});
 
   return (
     <MaxWidthWrapper>
@@ -53,7 +54,7 @@ export default async function ProductPage({ params }: { params: { productId: num
           <div className="grid gap-2 mt-4">
             <h3 className="text-xl font-semibold underline text-gray-800 dark:text-gray-200">Tracklist:</h3>
             <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400">
-              {pruebaTracklist.map((track, index) => (
+              {tracklist.map((track, index) => (
                 <li key={index}>{track}</li>
               ))}
             </ol>

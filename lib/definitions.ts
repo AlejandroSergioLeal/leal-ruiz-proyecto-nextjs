@@ -19,7 +19,18 @@ export type Product = {
   release_date: string,
   sold: number
 }
-
+/*
+export type LastFmAlbumInfo = {
+  album: {
+      name: string;
+      artist: string;
+      url: string;
+      image: { size: string, '#text': string }[];
+      listeners: string;
+      playcount: string;
+      tracks: LastFmTrack[];
+  };
+}*/
 export function createProduct(n: string, ar: string, im: string, pr: number, st: boolean,
   desc: string, g: string, f: string, date: string, sld: number): Product {
   let p: Product = {
