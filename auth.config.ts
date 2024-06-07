@@ -7,12 +7,15 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnAdminPage = nextUrl.pathname.startsWith('/');
+      const isOnAdminPage = nextUrl.pathname.startsWith('/admin');
       if (isOnAdminPage) {
-        if (isLoggedIn) return true;
+        if (isLoggedIn) 
+          return true;
+
         return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/products', nextUrl));
+      } 
+      else if (isLoggedIn) {
+        return Response.redirect(new URL('/admin', nextUrl));
       }
       return true;
     },
