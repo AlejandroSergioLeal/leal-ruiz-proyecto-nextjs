@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { ShoppingCart } from 'lucide-react';
 import { CartContext } from '../context/cart';
 import { Product } from '@/lib/definitions';
+import Link from 'next/link';
 
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext);
@@ -27,53 +28,59 @@ const Cart = () => {
       </SheetTrigger>
       <SheetContent className='flex w-full flex-col pr-0 sm:max-w-lg z-[150] p-6 shadow-lg rounded-lg bg-gray-50'>
         <SheetHeader className='space-y-2.5 pr-6'>
-          <SheetTitle>Cart ({isMounted ? cartItems.length : '...'})</SheetTitle>
+          <SheetTitle>Items({isMounted ? cartItems.length : '...'})</SheetTitle>
         </SheetHeader>
         <div className="flex-col flex items-center gap-8 text-black text-sm">
-          <h1 className="text-2xl font-bold">Cart</h1>
-          <div className="flex flex-col gap-4 w-full">
-            {isMounted && cartItems.map((item: Product) => (
-              <div className="flex justify-between items-center p-4 bg-white shadow-md rounded-md" key={item.product_id}>
-                <div className="flex gap-4">
-                  <div className="flex flex-col">
-                    <h1 className="text-lg font-bold">{item.name}</h1>
-                    <p className="text-gray-600">${item.price}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <button
-                    className="px-4 py-2 bg-black text-white text-xs font-bold uppercase rounded hover:bg-gray-800 focus:outline-none focus:bg-gray-800"
-                    onClick={() => addToCart(item)}
-                  >
-                    +
-                  </button>
-                  <button
-                    className="px-4 py-2 bg-gray-600 text-white text-xs font-bold uppercase rounded hover:bg-gray-500 focus:outline-none focus:bg-gray-500"
-                    onClick={() => removeFromCart(item)}
-                  >
-                    -
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          {isMounted && cartItems.length > 0 ? (
-            <div className="flex flex-col justify-between items-center w-full">
-              <h1 className="text-lg font-bold">Total: ${getCartTotal().toFixed(2)}</h1>
-              <button
-                className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                onClick={clearCart}
-              >
-                Clear cart
-              </button>
+          {isMounted && cartItems.length === 0 ? (
+            <div className="flex flex-col items-center justify-center w-full">
+              <h1 className="text-2xl font-bold mb-4">Tu carrito está vacío :(</h1>
+              <p className="mb-8">Hora de seguir comprando!</p>
+              <Link href="/products" className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                  Ver productos
+              </Link>
             </div>
           ) : (
-            <h1 className="text-lg font-bold">Your cart is empty</h1>
+            <div className="flex flex-col gap-4 w-full">
+              {cartItems.map((item: Product) => (
+                <div className="flex justify-between items-center p-4 bg-white shadow-md rounded-md" key={item.product_id}>
+                  <div className="flex gap-4">
+                    <div className="flex flex-col">
+                      <h1 className="text-lg font-bold">{item.name}</h1>
+                      <p className="text-gray-600">${item.price}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <button
+                      className="px-4 py-2 bg-black text-white text-xs font-bold uppercase rounded hover:bg-gray-800 focus:outline-none focus:bg-gray-800"
+                      onClick={() => addToCart(item)}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="px-4 py-2 bg-gray-600 text-white text-xs font-bold uppercase rounded hover:bg-gray-500 focus:outline-none focus:bg-gray-500"
+                      onClick={() => removeFromCart(item)}
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <div className="flex flex-col justify-between items-center w-full">
+                <h1 className="text-lg font-bold">Total: ${getCartTotal().toFixed(2)}</h1>
+                <button
+                  className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                  onClick={clearCart}
+                >
+                 Vaciar
+                </button>
+              </div>
+            </div>
           )}
         </div>
       </SheetContent>
     </Sheet>
   );
+  
 }
 
 export default Cart;

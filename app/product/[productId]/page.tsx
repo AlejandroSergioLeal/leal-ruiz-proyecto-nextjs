@@ -1,22 +1,21 @@
+import { Button, buttonVariants } from '@/app/ui/button';
+import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper';
+import * as dao from '@/lib/dao';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { getAlbumInfo } from '@/lastfm';
+import CartButton from '@/app/ui/ButtonCart';
 
-import { Button, buttonVariants } from '@/app/ui/button'
-import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper'
-import * as dao from '@/lib/dao'
-import Image from 'next/image'
-import { cn } from '@/lib/utils'
-import { getAlbumInfo } from '@/lastfm'
-import CartButton from '@/app/ui/ButtonCart'
-
-interface Track{
-  name: string
-  duration: string
+interface Track {
+  name: string;
+  duration: string;
 }
 
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
   const albuminfo = await getAlbumInfo(producto.artist, producto.name);
-  let tracklist : string[] = [];
+  let tracklist: string[] = [];
 
   if (albuminfo?.album?.tracks?.track) {
     albuminfo.album.tracks.track.forEach((track: Track) => {
@@ -28,13 +27,14 @@ export default async function ProductPage({ params }: { params: { productId: num
     <MaxWidthWrapper>
       <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4 bg-gray-100 dark:bg-gray-800 shadow-lg mt-5 mb-5">
         <div className="flex justify-center items-center">
-          <div className="relative w-[500px] h-[500px]">
+          <div className="relative w-full max-w-xs md:max-w-none md:w-[500px] md:h-[500px]">
             <Image
-              src={producto.image}   //Tamaño imagenes de 500x500 y remover BG
-              layout="fill"
-              objectFit="contain"
+              src={producto.image}
+              height={500}
+              width={500}
               alt="Product Image"
-              className="rounded-lg"
+              priority // Add priority to improve LCP
+              className="rounded-lg object-cover w-full h-auto"
             />
           </div>
         </div>
