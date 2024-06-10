@@ -167,7 +167,8 @@ export async function fetchFilteredProducts (
       SELECT * FROM products
       WHERE 
         name ILIKE ${`%${query}%`} OR
-        artist ILIKE ${`%${query}%`}
+        artist ILIKE ${`%${query}%`} OR
+        genre ILIKE ${`%${query}%`}
       LIMIT ${itemsPerPage} OFFSET ${offset};
     `;
     return result.rows;
@@ -186,7 +187,8 @@ export async function fetchFilteredProducts (
       FROM products
       WHERE
       name ILIKE ${`%${query}%`} OR
-      artist ILIKE ${`%${query}%`}
+      artist ILIKE ${`%${query}%`} OR
+      genre ILIKE ${`%${query}%`};
     `;
   
       const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);

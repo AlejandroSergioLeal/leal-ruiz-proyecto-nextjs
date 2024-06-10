@@ -33,7 +33,7 @@ export default async function ProductPage({ params }: { params: { productId: num
               height={500}
               width={500}
               alt="Product Image"
-              priority // Add priority to improve LCP
+              priority 
               className="rounded-lg object-cover w-full h-auto"
             />
           </div>
