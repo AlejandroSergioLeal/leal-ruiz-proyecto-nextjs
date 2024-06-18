@@ -1,8 +1,7 @@
-import { Button, buttonVariants } from '@/app/ui/button';
+
 import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper';
 import * as dao from '@/lib/dao';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 import { getAlbumInfo } from '@/lastfm';
 import CartButton from '@/app/ui/ButtonCart';
 

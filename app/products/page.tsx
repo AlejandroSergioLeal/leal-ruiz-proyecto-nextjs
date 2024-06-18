@@ -8,8 +8,8 @@ import { SkeletonProductWrapper } from './ui/skeletons';
 import Filter from './ui/Filter';
 import MaxWidthWrapper from '../ui/MaxWidthWrapper';
 
-const productlist = await dao.getAllProducts();
-console.log(`total de productos en bd: ${productlist.length}`);
+
+
 
 export default async function ProductsPage({
   searchParams
@@ -22,7 +22,7 @@ export default async function ProductsPage({
   
   const query = searchParams?.query || ''
   const currentPage = Number(searchParams?.page) || 1
-  const totalPages = await dao.fetchTotalPages(query);
+  const totalPages = await dao.fetchTotalActivePages(query);
   
   return (
     <>
