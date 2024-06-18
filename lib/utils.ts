@@ -1,7 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { Product } from "./definitions";
-import * as dao from "@/lib/dao"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -31,3 +29,26 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export function systemDate() {
+  const fechaActual = new Date();
+  const dia = fechaActual.getDate();
+  const mes = fechaActual.getMonth() + 1; // Los meses empiezan desde 0
+  const año = fechaActual.getFullYear();
+
+  // Formatea el día y el mes para mostrarlos con dos dígitos
+  const diaFormateado = dia < 10 ? "0" + dia : dia;
+  const mesFormateado = mes < 10 ? "0" + mes : mes;
+
+  // Devuelve la fecha en formato YYYY-MM-DD
+  return año + "-" + mesFormateado + "-" + diaFormateado;
+}
+
+export function isImageURL(str : string) {
+  const expresionRegular = /^(ftp|http|https):\/\/[^ "]+(\.png|\.jpg|\.jpeg)$/;
+  return expresionRegular.test(str);
+}
+
+export function delay(ms : number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

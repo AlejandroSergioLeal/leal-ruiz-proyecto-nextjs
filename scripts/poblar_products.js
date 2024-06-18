@@ -2,19 +2,18 @@ import * as dao from "@/lib/productDAO"
 const default_list = require("./defaultProducts");
 
 async function seedProducts(){
-    default_list.map(
-        (prod) =>
-        dao.insertProduct({name: prod.name, 
-                        artist: prod.artist, 
-                        image: prod.image,
-                        price: prod.price, 
-                        state: prod.state, 
-                        description: prod.description, 
-                        genre: prod.genre, 
-                        format: prod.format, 
-                        release_date: prod.release_date, 
-                        sold: 0})
-    )
+  const p = {
+    product_id: 0,
+    name: "Test Album",
+    artist: "Artisto",
+    description:"this is a description",
+    format: "LP",
+    genre: "Pop",
+    image: "/default_disc.jpg",
+    price: 10.50,
+    state: true
+}
+  dao.insertProduct(p)
 }
 
 async function main() {

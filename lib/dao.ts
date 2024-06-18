@@ -2,7 +2,7 @@
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Product, User } from './definitions';
-import { systemDate } from './utils';
+import { delay, systemDate } from './utils';
 
 export async function insertProduct(p: Product): Promise<Product> {
   try {
