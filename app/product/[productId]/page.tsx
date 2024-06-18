@@ -15,11 +15,17 @@ interface Track{
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
-  const albuminfo = await getAlbumInfo(producto.artist, producto.name);
   let tracklist : string[] = [];
+  let albumInfo;
+  try{
+    albumInfo = await getAlbumInfo(producto.artist, producto.name);
+  }
+  catch(error){
+    albumInfo = null;
+  }
 
-  if (albuminfo?.album?.tracks?.track) {
-    albuminfo.album.tracks.track.forEach((track: Track) => {
+  if (albumInfo?.album?.tracks?.track) {
+    albumInfo.album.tracks.track.forEach((track: Track) => {
       tracklist.push(track.name);
     });
   }
