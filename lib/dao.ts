@@ -152,7 +152,8 @@ export async function fetchFilteredProducts (
       SELECT * FROM products
       WHERE 
         name ILIKE ${`%${query}%`} OR
-        artist ILIKE ${`%${query}%`}
+        artist ILIKE ${`%${query}%`} OR
+        genre ILIKE ${`%${query}%`}
       LIMIT ${itemsPerPage} OFFSET ${offset};
     `;
     return result.rows;
@@ -195,7 +196,8 @@ export async function fetchFilteredProducts (
       FROM products
       WHERE
       name ILIKE ${`%${query}%`} OR
-      artist ILIKE ${`%${query}%`}
+      artist ILIKE ${`%${query}%`} OR
+      genre ILIKE ${`%${query}%`};
     `;
   
       const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
@@ -205,3 +207,52 @@ export async function fetchFilteredProducts (
       throw new Error('Failed to fetch total number of products.');
     }
   }
+
+
+  export async function fetchFilteredActiveProducts (
+    query: string,
+    currentPage: number,
+  ){
+    try {
+      noStore();
+     
+      const offset = (currentPage - 1) * itemsPerPage;
+  
+      const result = await sql<Product>`
+        SELECT * FROM products
+        WHERE 
+          (name ILIKE ${`%${query}%`} OR
+          artist ILIKE ${`%${query}%`} OR
+          genre ILIKE ${`%${query}%`}) AND
+          state = 'true'
+        LIMIT ${itemsPerPage} OFFSET ${offset};
+      `;
+      return result.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch products.');
+    }
+  
+  }
+  
+
+  export async function fetchTotalActivePages(query: string) {
+    noStore();
+    try {
+      const count = await sql`SELECT COUNT(*)
+      FROM products
+      WHERE
+        (name ILIKE ${`%${query}%`} OR
+        artist ILIKE ${`%${query}%`} OR
+        genre ILIKE ${`%${query}%`}) AND
+        state = 'true';
+      `;
+  
+      const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
+      return totalPages;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total number of products.');
+    }
+  }
+  

@@ -8,6 +8,7 @@ import { Product } from "@/lib/definitions";
 import ProductsSection from "./ui/ProductsSection";
 import HeroSection from "./ui/HeroSection";
 import AdvantagesSection from "./ui/AdvantagesSection";
+import ArtistSection from "./ui/ArtistSection";
 
 
 
@@ -51,31 +52,9 @@ export default function Home() {
   
     <ProductsSection title="Recién Añadidos" subtitle="Nuevos Lanzamientos" products={RecentProducts} />
       
-      <section>
-          <MaxWidthWrapper className="py-2 md:py-5 lg:py-10">
-            <div className="flex flex-col-reverse md:flex-row items-center justify-between">
-              <div className="flex-1 text-center md:text-left md:mb-0 mb-4">
-                <h1 className="mt-4 md:mt-0 text-3xl font-bold tracking-tighter sm:text-xl md:text-4xl">
-                  Aca iría api externa, estoy en eso
-                 </h1>
-                <h2 className="text-lg text-black mt-4">
-                    soundcloud api o algo asi
-                </h2>
-              </div>
-            <div className="flex-shrink-0">
-            <Image
-                src="/pruebadiv.png"
-                height={500}
-                width={500}
-                alt="Carousel Image"
-                className="object-right"
-             />
-            </div>
-         </div>
-      </MaxWidthWrapper>
-      </section>
+    <ArtistSection/>
 
-      <AdvantagesSection/>
+    <AdvantagesSection/>
     </>
   );
 }

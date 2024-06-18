@@ -1,27 +1,23 @@
 'use client'
 
 import { Product } from '@/lib/definitions';
-import { createContext, useState, useEffect, useContext} from 'react';
+import { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
-interface CartItem {
+interface CartItem extends Product {
   id: number;
-  price: number;
   quantity: number;
 }
 
-
 export const CartContext = createContext<any>(undefined);
 
-export function CartProvider({children} : {
-    children: React.ReactNode;
-} ) {
-    const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-        if (typeof window !== "undefined") {
-            const storedCartItems = localStorage.getItem('cartItems');
-            return storedCartItems ? JSON.parse(storedCartItems) as CartItem[] : [];
-        }
-        return [];
-    });
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      const storedCartItems = localStorage.getItem('cartItems');
+      return storedCartItems ? JSON.parse(storedCartItems) as CartItem[] : [];
+    }
+    return [];
+  });
 
   const addToCart = (item: Product) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.product_id);
@@ -68,9 +64,9 @@ export function CartProvider({children} : {
   }, [cartItems]);
 
   useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
-    if (cartItems) {
-      setCartItems(JSON.parse(cartItems));
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
 
@@ -90,5 +86,5 @@ export function CartProvider({children} : {
 }
 
 export function useAppContext() {
-    return useContext(CartContext);
+  return useContext(CartContext);
 }
