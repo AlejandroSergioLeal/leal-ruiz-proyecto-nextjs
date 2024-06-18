@@ -4,6 +4,7 @@ import * as dao from '@/lib/dao';
 import Image from 'next/image';
 import { getAlbumInfo } from '@/lastfm';
 import CartButton from '@/app/ui/ButtonCart';
+import { notFound } from 'next/navigation';
 
 interface Track {
   name: string;
@@ -13,6 +14,11 @@ interface Track {
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
+
+  if (!producto) {
+    notFound();
+  }
+
   const albuminfo = await getAlbumInfo(producto.artist, producto.name);
   let tracklist: string[] = [];
 
