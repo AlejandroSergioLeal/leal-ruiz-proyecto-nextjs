@@ -1,4 +1,5 @@
 import { CartItem } from '@/app/ui/Cart';
+import { sql } from '@vercel/postgres';
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -6,13 +7,41 @@ const client = new MercadoPagoConfig({ accessToken: 'TEST-17174604455274-061114-
 
 export async function POST(request: NextRequest) {
   try {
-    const { items } = await request.json();
+    const { items, email } = await request.json();
 
+   
+    const { rows } = await sql`
+      INSERT INTO sales (date, t_ID_MP, person_email) 
+      VALUES (NOW(), 1, ${email}) 
+      RETURNING sale_id
+    `;
+    
+    console.log("sale_id:", rows[0].sale_id);
+    const sale_id = rows[0].sale_id;
+ 
+    for (const item of items) {
+      try {
+        if (item.price && item.quantity && item.product_id) {
+          await sql`
+            INSERT INTO sales_details
+              (price, quantity, subtotal, sale_id, product_id) 
+            VALUES (${item.price}, ${item.quantity}, ${item.price * item.quantity}, ${sale_id}, ${item.product_id})
+          `;
+        } else {
+          console.error('Item data is invalid:', item);
+        }
+      } catch (err) {
+        console.error('Error inserting into sales_details:', err);
+        throw new Error('Error inserting into sales_details');
+      }
+    }
+
+    // Crea la preferencia en MercadoPago
     const preference = new Preference(client);
 
     const response = await preference.create({
       body: {
-        external_reference: '123',
+        external_reference: sale_id,
         items: items.map((item: CartItem) => ({
           title: item.name,
           quantity: item.quantity,
@@ -21,9 +50,9 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    return NextResponse.json({ preferenceId: response.id, items });
+    return NextResponse.json({ preferenceId: response.id, sale_id });
   } catch (error) {
-    console.error(error);
+    console.error('Error processing POST request:', error);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 }

@@ -34,12 +34,13 @@ const Cart = () => {
 
   const handleClick = async () => {
     try {
+      const email = prompt('Por favor, ingrese su email:');
       const response = await fetch('/api/preference', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ items: cartItems }),
+        body: JSON.stringify({ items: cartItems, email }),
       });
       const data = await response.json();
       setPreferenceId(data.preferenceId);
