@@ -8,22 +8,29 @@ import ErrorAlert from "../ErrorAlert";
 export default function ProductCreationForm() {
     const descrCharLimit = 255;
     const charLimit = 120;
-    const [imageUrl, setImageUrl] = useState("/default_image.png")
+    const DEFAULT_IMG: string = "/default_image.png";
+    const [imageUrl, setImageUrl] = useState(DEFAULT_IMG)
+    const [imageLabel, setImageLabel] = useState("");
     const [buttonBlock, setButtonBlock] = useState(false)
     const [success, setSuccess] = useState(false)
     const [failed, setFailed] = useState(false)
-
-    const cancelOnClick = () => {
-        redirect("/admin")
-    }
-
+    
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
         const newUrl = event.target.value;
-        setImageUrl(newUrl);
+        if (newUrl.startsWith('https://res.cloudinary.com')) {
+            setImageUrl(newUrl);
+            setImageLabel("");
+        }
+        else
+            handleImgError();
     };
 
     const createProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (imageUrl == DEFAULT_IMG) {
+            setImageLabel("Ingrese un link válido de Cloudinary")
+            return
+        }
         setButtonBlock(true)
         const formData = new FormData(event.currentTarget);
         try {
@@ -34,13 +41,17 @@ export default function ProductCreationForm() {
             setFailed(true);
         }
     }
-    const handleCancel = () =>{
+    const handleCancel = () => {
         redirectToAdmin()
+    }
+
+    function handleImgError(): void {
+        setImageUrl(DEFAULT_IMG);
     }
 
     return (
         <div>
-            <form onSubmit={createProduct}>
+            <form onSubmit={createProduct} >
                 <div className="flex flex-col items-center min-h-screen mb-10 sm:flex-row">
                     <div className="flex flex-col sm:mr-4">
                         {/*album: */}
@@ -120,9 +131,11 @@ export default function ProductCreationForm() {
                         </div>
                     </div>
                     <div className="flex flex-col items-center sm:ml-4">
+                        {/* imagen */}
                         <Image
                             className="w-full h-auto max-w-[300px] max-h-[300px] object-cover mb-5 rounded-md"
                             src={imageUrl}
+                            onError={handleImgError}
                             alt="Imagen de Producto"
                             height={300}
                             width={300}
@@ -140,6 +153,9 @@ export default function ProductCreationForm() {
                                 required
                             />
                         </div>
+                        <label className="text-red-500 text-sm mt-1">
+                            {imageLabel}
+                        </label>
                         {/* checkbox habilitar producto: */}
                         <div className="form-control">
                             <label className="label cursor-pointer flex items-center justify-start">
@@ -153,17 +169,17 @@ export default function ProductCreationForm() {
                         </div>
                         {/* botones */}
                         <div className="flex flex-col w-full">
-                            <button type="submit" 
-                                    className="btn btn-accent m-2" 
-                                    disabled={buttonBlock}
+                            <button type="submit"
+                                className="btn btn-accent m-2"
+                                disabled={buttonBlock}
                             >
                                 {!buttonBlock ? "Crear Producto" : "Procesando.."}
 
                             </button>
-                            <button type="button" 
-                                    className="btn btn-neutral m-2" 
-                                    disabled={buttonBlock} 
-                                    onClick= {handleCancel}
+                            <button type="button"
+                                className="btn btn-neutral m-2"
+                                disabled={buttonBlock}
+                                onClick={handleCancel}
                             >
                                 Cancelar
                             </button>
@@ -171,7 +187,7 @@ export default function ProductCreationForm() {
                     </div>
                 </div>
             </form>
-            
+
             {success ? (
                 <SuccessAlert title={"Éxito"} desc={"El producto fue creado exitosamente."} />
             ) : failed ? (

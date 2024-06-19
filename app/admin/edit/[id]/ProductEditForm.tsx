@@ -12,12 +12,23 @@ export default function ProductEditForm({ product }: { product: Product }) {
     const [buttonBlock, setButtonBlock] = useState(false)
     const [success, setSuccess] = useState(false)
     const [failed, setFailed] = useState(false)
-
+    const [imageLabel, setImageLabel] = useState("");
+    const DEFAULT_IMG: string = "/default_image.png";
     const [imageUrl, setImageUrl] = useState(product.image)
+
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
         const newUrl = event.target.value;
-        setImageUrl(newUrl);
+        if (newUrl.startsWith('https://res.cloudinary.com')) {
+            setImageUrl(newUrl);
+            setImageLabel("");
+        }
+        else
+            handleImgError();
     };
+
+    function handleImgError(): void {
+        setImageUrl(DEFAULT_IMG);
+    }
 
     const [isChecked, setIsChecked] = useState(product.state)
     const handleState = () => {
@@ -26,6 +37,10 @@ export default function ProductEditForm({ product }: { product: Product }) {
 
     const sendUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (imageUrl == DEFAULT_IMG) {
+            setImageLabel("Ingrese un link válido de Cloudinary")
+            return
+        }
         setButtonBlock(true)
         const formData = new FormData(event.currentTarget);
         try {
@@ -134,9 +149,11 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                     </div>
                     <div className="flex flex-col items-center sm:ml-4">
+                        {/*imagen */}
                         <Image
                             className="w-full h-auto max-w-[300px] max-h-[300px] object-cover mb-5 rounded-md"
                             src={imageUrl}
+                            onError={handleImgError}
                             alt="Imagen de Producto"
                             height={300}
                             width={300}
@@ -155,6 +172,9 @@ export default function ProductEditForm({ product }: { product: Product }) {
                                 required
                             />
                         </div>
+                        <label className="text-red-500 text-sm mt-1">
+                            {imageLabel}
+                        </label>
                         {/* checkbox habilitar producto: */}
                         <div className="form-control">
                             <label className="label cursor-pointer flex items-center justify-start">
