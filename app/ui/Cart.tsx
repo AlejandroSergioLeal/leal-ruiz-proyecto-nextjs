@@ -4,20 +4,24 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { ShoppingCart } from 'lucide-react';
 import { CartContext } from '../context/cart';
 import { Product } from '@/lib/definitions';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from './button';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import { useToast } from '@/components/ui/use-toast';
+
 
 export type CartItem = Product & {
   quantity: number
 }
+
+
 
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext);
   const [isMounted, setIsMounted] = useState(false);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false);
+  
 
   useEffect(() => {
     setIsMounted(true);
@@ -49,6 +53,9 @@ const Cart = () => {
     }
   };
 
+ 
+
+
   return (
     <Sheet>
       <SheetTrigger className='group -m-2 flex items-center p-2'>
@@ -64,17 +71,14 @@ const Cart = () => {
         <SheetHeader className='space-y-2.5 pr-6'>
           <SheetTitle>Items({isMounted ? cartItems.length : '...'})</SheetTitle>
         </SheetHeader>
-        <div className="flex-col flex items-center gap-8 text-black text-sm">
+        <div className={`flex-1 flex flex-col items-center ${isMounted && cartItems.length === 0 ? 'justify-center' : 'justify-start'} gap-8 text-black text-sm`}>
           {isMounted && cartItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center w-full">
               <h1 className="text-2xl font-bold mb-4">Tu carrito está vacío :(</h1>
               <p className="mb-8">Hora de seguir comprando!</p>
-              <Link href="/products" className="px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                Ver productos
-              </Link>
             </div>
           ) : (
-            <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-4 w-full h-[80vh] overflow-y-auto">
               {cartItems.map((item: CartItem) => (
                 <div className="flex justify-between items-center p-4 bg-white shadow-md rounded-md" key={item.product_id}>
                   <div className="flex gap-4">
@@ -86,7 +90,7 @@ const Cart = () => {
                   <div className="flex gap-4">
                     <button
                       className="px-4 py-2 bg-black text-white text-xs font-bold uppercase rounded hover:bg-gray-800 focus:outline-none focus:bg-gray-800"
-                      onClick={() => addToCart(item)}
+                      onClick={() => {addToCart(item)}}
                     >
                       +
                     </button>
@@ -99,7 +103,7 @@ const Cart = () => {
                   </div>
                 </div>
               ))}
-              <div className="flex flex-col justify-between items-center w-full">
+              <div className="flex flex-col justify-between items-center w-full mt-8">
                 <h1 className="text-lg font-bold">Total: ${getCartTotal().toFixed(2)}</h1>
                 <Button
                   className={cn(buttonVariants({ variant: 'destructive' }), 'px-4 py-2 mt-4')}
@@ -115,14 +119,15 @@ const Cart = () => {
                     Procesar pago
                   </Button>
                 )}
+                {preferenceId && <Wallet initialization={{ preferenceId }} />}
               </div>
-              {preferenceId && <Wallet initialization={{ preferenceId }} />}
             </div>
           )}
         </div>
       </SheetContent>
     </Sheet>
   );
-};
+}
+
 
 export default Cart;

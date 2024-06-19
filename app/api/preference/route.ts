@@ -20,20 +20,13 @@ export async function POST(request: NextRequest) {
     const sale_id = rows[0].sale_id;
  
     for (const item of items) {
-      try {
-        if (item.price && item.quantity && item.product_id) {
+     
           await sql`
             INSERT INTO sales_details
               (price, quantity, subtotal, sale_id, product_id) 
             VALUES (${item.price}, ${item.quantity}, ${item.price * item.quantity}, ${sale_id}, ${item.product_id})
           `;
-        } else {
-          console.error('Item data is invalid:', item);
-        }
-      } catch (err) {
-        console.error('Error inserting into sales_details:', err);
-        throw new Error('Error inserting into sales_details');
-      }
+        
     }
 
     // Crea la preferencia en MercadoPago

@@ -3,6 +3,7 @@ import {montserrat} from '@/app/ui/fonts';
 import Footer from './ui/Footer';
 import Navbar from '../components/ui/Navbar';
 import { CartProvider } from './context/cart';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function RootLayout({
   children,
@@ -20,6 +21,7 @@ export default function RootLayout({
             <Footer/>
           </div>
         </main>
+        <Toaster/>
       </body>
     </html>
    </CartProvider>
