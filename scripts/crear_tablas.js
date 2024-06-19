@@ -13,8 +13,7 @@ async function createProductsTable(client) {
                 description VARCHAR(255) NOT NULL,
                 genre VARCHAR(255) NOT NULL,
                 format VARCHAR(127) NOT NULL,
-                release_date DATE NOT NULL,
-                sold INT NOT NULL
+                release_date DATE NOT NULL
             );`
 
     }

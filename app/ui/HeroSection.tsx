@@ -18,7 +18,7 @@ export default function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-12 sm:mt-6 py-10 ">
             <Link href="/products" className={cn(buttonVariants(), "pointer-events-auto")}>
-              Compra ahora!
+              Ver Catálogo
             </Link>
           </div>
         </div>

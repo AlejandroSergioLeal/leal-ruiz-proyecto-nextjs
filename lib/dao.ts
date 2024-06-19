@@ -10,11 +10,11 @@ export async function insertProduct(p: Product): Promise<Product> {
     console.log(p)
     const date = systemDate();
     const result = await sql<Product>
-      `INSERT INTO products (name, artist, image, price, state, description, genre, format, release_date, sold)
+      `INSERT INTO products (name, artist, image, price, state, description, genre, format, release_date)
      VALUES (${p.name},${p.artist},${p.image},${p.price},${p.state},
-     ${p.description},${p.genre},${p.format},${date},0)
+     ${p.description},${p.genre},${p.format},${date})
      RETURNING *`
-     console.log(`insertado: ${p.name}`)
+    console.log(`insertado: ${p.name}`)
     return result.rows[0];
   }
   catch (error) {
@@ -25,7 +25,7 @@ export async function insertProduct(p: Product): Promise<Product> {
 
 
 
-export async function updateProduct(p: Product): Promise<boolean>{
+export async function updateProduct(p: Product): Promise<boolean> {
   try {
     //
     let res = false;
@@ -40,7 +40,7 @@ export async function updateProduct(p: Product): Promise<boolean>{
           genre =  ${p.genre},
           format =  ${p.format}
       WHERE product_id = ${p.product_id};`
-     console.log(`actualizado`)
+    console.log(`actualizado`)
     res = true;
     return res;
   }
@@ -100,11 +100,19 @@ export async function getMostRecentProducts(cant: number): Promise<Product[]> {
 }
 
 //retorna los productos con ventas mayor o iguales a amount
-export async function getProductsByMinSales(amount : number){
+export async function getProductsByMaxSales(cant: number) {
   try {
     //
-    const result = await sql<Product>`SELECT * FROM products WHERE sold > ${amount-1} AND
-          state = 'true'`
+    const result = await sql<Product>`
+    SELECT 
+      products.*
+    FROM 
+      sales_details JOIN products ON sales_details.product_id = products.product_id
+    WHERE state = 'true'
+    GROUP BY products.product_id
+    ORDER BY SUM(sales_details.quantity) DESC
+    LIMIT ${cant};
+`
     return result.rows;
   }
   catch (error) {
@@ -126,7 +134,7 @@ export async function deleteProduct(product_id: number) {
   }
 }
 
-export async function getUser(email: string) : Promise<User>{
+export async function getUser(email: string): Promise<User> {
   try {
     //
     const result = await sql<User>`SELECT * FROM users WHERE e_mail = ${email}`
@@ -139,14 +147,14 @@ export async function getUser(email: string) : Promise<User>{
 }
 
 
-const itemsPerPage = 12; 
-export async function fetchFilteredProducts (
+const itemsPerPage = 12;
+export async function fetchFilteredProducts(
   query: string,
   currentPage: number,
-){
+) {
   try {
     //
-   
+
     const offset = (currentPage - 1) * itemsPerPage;
 
     const result = await sql<Product>`
@@ -163,18 +171,18 @@ export async function fetchFilteredProducts (
     throw new Error('Failed to fetch products.');
   }
 
-  }
+}
 
-  export async function fetchFilteredProductsForAdminTable (
-    query: string,
-    currentPage: number,
-  ){
-    try {
-      //
-     
-      const offset = (currentPage - 1) * itemsPerPage;
-  
-      const result = await sql<Product>`
+export async function fetchFilteredProductsForAdminTable(
+  query: string,
+  currentPage: number,
+) {
+  try {
+    //
+
+    const offset = (currentPage - 1) * itemsPerPage;
+
+    const result = await sql<Product>`
         SELECT product_id,artist,name,price,state FROM products
         WHERE 
           name ILIKE ${`%${query}%`} OR
@@ -182,44 +190,44 @@ export async function fetchFilteredProducts (
         ORDER BY name
         LIMIT ${itemsPerPage} OFFSET ${offset};
       `;
-      return result.rows;
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to fetch products.');
-    }
-  
-    }
+    return result.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
+  }
 
-  export async function fetchTotalPages(query: string) {
-    //
-    try {
-      const count = await sql`SELECT COUNT(*)
+}
+
+export async function fetchTotalPages(query: string) {
+  //
+  try {
+    const count = await sql`SELECT COUNT(*)
       FROM products
       WHERE
       name ILIKE ${`%${query}%`} OR
       artist ILIKE ${`%${query}%`} OR
       genre ILIKE ${`%${query}%`};
     `;
-  
-      const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
-      return totalPages;
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to fetch total number of products.');
-    }
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of products.');
   }
+}
 
 
-  export async function fetchFilteredActiveProducts (
-    query: string,
-    currentPage: number,
-  ){
-    try {
-      noStore();
-     
-      const offset = (currentPage - 1) * itemsPerPage;
-  
-      const result = await sql<Product>`
+export async function fetchFilteredActiveProducts(
+  query: string,
+  currentPage: number,
+) {
+  try {
+    noStore();
+
+    const offset = (currentPage - 1) * itemsPerPage;
+
+    const result = await sql<Product>`
         SELECT * FROM products
         WHERE 
           (name ILIKE ${`%${query}%`} OR
@@ -228,19 +236,19 @@ export async function fetchFilteredProducts (
           state = 'true'
         LIMIT ${itemsPerPage} OFFSET ${offset};
       `;
-      return result.rows;
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to fetch products.');
-    }
-  
+    return result.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
   }
-  
 
-  export async function fetchTotalActivePages(query: string) {
-    noStore();
-    try {
-      const count = await sql`SELECT COUNT(*)
+}
+
+
+export async function fetchTotalActivePages(query: string) {
+  noStore();
+  try {
+    const count = await sql`SELECT COUNT(*)
       FROM products
       WHERE
         (name ILIKE ${`%${query}%`} OR
@@ -248,12 +256,11 @@ export async function fetchFilteredProducts (
         genre ILIKE ${`%${query}%`}) AND
         state = 'true';
       `;
-  
-      const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
-      return totalPages;
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to fetch total number of products.');
-    }
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of products.');
   }
-  
+}

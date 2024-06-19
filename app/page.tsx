@@ -12,10 +12,10 @@ import ArtistSection from "./ui/ArtistSection";
 
 
 
-const ventas_minimas_best_sellers = 80;
-const cant_mas_recientes = 6;
+const cant_best_sellers = 10;
+const cant_mas_recientes = 10;
 
-const BestSellers : Product[]= await dao.getProductsByMinSales(ventas_minimas_best_sellers)
+const BestSellers : Product[]= await dao.getProductsByMaxSales(cant_best_sellers)
 const RecentProducts: Product[]= await dao.getMostRecentProducts(cant_mas_recientes);
 
 export default function Home() {
