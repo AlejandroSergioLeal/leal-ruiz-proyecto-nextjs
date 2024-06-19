@@ -9,12 +9,13 @@ import {
 import ProductCard from "./ProductCard";
 import { Product } from "@/lib/definitions";
 
- interface CarouselSizeProps{
-  products: Product[];
+ interface CarouselProps{
+  productFetch: () => Promise<Product[]>;
 }  
 
 
-export function CarouselSize({products}: CarouselSizeProps) {
+export async function CarouselSize({productFetch}: CarouselProps) {
+  const products = await productFetch();
   return (
     <Carousel className="w-full ">
       <CarouselContent className="mb-2">

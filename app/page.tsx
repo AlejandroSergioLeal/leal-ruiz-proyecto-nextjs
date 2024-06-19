@@ -15,14 +15,15 @@ import ArtistSection from "./ui/ArtistSection";
 const cant_best_sellers = 10;
 const cant_mas_recientes = 10;
 
-const BestSellers : Product[]= await dao.getProductsByMaxSales(cant_best_sellers)
-const RecentProducts: Product[]= await dao.getMostRecentProducts(cant_mas_recientes);
+//const BestSellers : Product[]= await dao.getProductsByMaxSales(cant_best_sellers)
+const bestSellersFetch = dao.getProductsByMaxSales;
+const mostRecentFetch = dao.getMostRecentProducts;
 
 export default function Home() {
   return (
     <>
     <HeroSection/>
-    <ProductsSection title="Nuestros Best-Sellers" subtitle="Productos Destacados" products={BestSellers} />
+    <ProductsSection title="Productos Destacados" subtitle="Nuestros Best-Sellers" productFetch={bestSellersFetch} />
     <section >
           <MaxWidthWrapper className="py-2 md:py-5 lg:py-10 ">
             <div className="flex flex-col-reverse md:flex-row items-center justify-between mt-10">
@@ -50,7 +51,7 @@ export default function Home() {
       </MaxWidthWrapper>
       </section>
   
-    <ProductsSection title="Recién Añadidos" subtitle="Nuevos Lanzamientos" products={RecentProducts} />
+    <ProductsSection title="Nuevos Lanzamientos" subtitle="Recién Añadidos" productFetch={mostRecentFetch} />
       
     <ArtistSection/>
 

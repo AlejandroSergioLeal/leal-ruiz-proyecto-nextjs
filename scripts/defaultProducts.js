@@ -10,7 +10,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "Single",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -23,7 +23,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -36,7 +36,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "Single",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -49,7 +49,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -62,7 +62,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -75,7 +75,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -88,7 +88,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "Single",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -101,7 +101,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -114,7 +114,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "Single",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -127,7 +127,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -140,7 +140,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     },
     {
       "id": "uuid_generate_v4()",
@@ -153,7 +153,7 @@ const default_list = [
       "genre": "uuid_generate_v4()",
       "format": "LP",
       "release_date": "2023-01-01",
-      "sold": 0
+      
     }
   ]
   

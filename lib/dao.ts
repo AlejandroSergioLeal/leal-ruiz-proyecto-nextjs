@@ -1,6 +1,5 @@
 
 import { sql } from '@vercel/postgres';
-import { unstable_noStore as noStore } from 'next/cache';
 import { Product, User } from './definitions';
 import { delay, systemDate } from './utils';
 
@@ -77,7 +76,6 @@ export async function getProductsByName(n: string): Promise<Product[]> {
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
-    //
     const result = await sql<Product>`SELECT * FROM products`
     return result.rows;
   }
@@ -87,9 +85,9 @@ export async function getAllProducts(): Promise<Product[]> {
   }
 }
 
-export async function getMostRecentProducts(cant: number): Promise<Product[]> {
+export async function getMostRecentProducts(): Promise<Product[]> {
   try {
-    //
+    const cant = 10;
     const result = await sql<Product>`SELECT * FROM products WHERE state = 'true' ORDER BY release_date DESC LIMIT ${cant}`
     return result.rows;
   }
@@ -100,9 +98,9 @@ export async function getMostRecentProducts(cant: number): Promise<Product[]> {
 }
 
 //retorna los productos con ventas mayor o iguales a amount
-export async function getProductsByMaxSales(cant: number) {
+export async function getProductsByMaxSales() {
   try {
-    //
+    const cant = 10;
     const result = await sql<Product>`
     SELECT 
       products.*
@@ -178,8 +176,6 @@ export async function fetchFilteredProductsForAdminTable(
   currentPage: number,
 ) {
   try {
-    //
-
     const offset = (currentPage - 1) * itemsPerPage;
 
     const result = await sql<Product>`
@@ -223,8 +219,6 @@ export async function fetchFilteredActiveProducts(
   currentPage: number,
 ) {
   try {
-    noStore();
-
     const offset = (currentPage - 1) * itemsPerPage;
 
     const result = await sql<Product>`
@@ -246,7 +240,6 @@ export async function fetchFilteredActiveProducts(
 
 
 export async function fetchTotalActivePages(query: string) {
-  noStore();
   try {
     const count = await sql`SELECT COUNT(*)
       FROM products

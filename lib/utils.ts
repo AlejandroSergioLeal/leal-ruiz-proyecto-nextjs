@@ -49,6 +49,6 @@ export function isImageURL(str : string) {
   return expresionRegular.test(str);
 }
 
-export function delay(ms : number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export function delay(segs : number) {
+  return new Promise(resolve => setTimeout(resolve, segs * 1000));
 }
