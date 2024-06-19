@@ -90,8 +90,7 @@ export async function getAllProducts(): Promise<Product[]> {
 export async function getMostRecentProducts(cant: number): Promise<Product[]> {
   try {
     //
-    const result = await sql<Product>`SELECT * FROM products ORDER BY release_date DESC LIMIT ${cant} AND
-    state = 'true'`
+    const result = await sql<Product>`SELECT * FROM products WHERE state = 'true' ORDER BY release_date DESC LIMIT ${cant}`
     return result.rows;
   }
   catch (error) {
@@ -105,7 +104,7 @@ export async function getProductsByMinSales(amount : number){
   try {
     //
     const result = await sql<Product>`SELECT * FROM products WHERE sold > ${amount-1} AND
-    state = 'true'`
+          state = 'true'`
     return result.rows;
   }
   catch (error) {
