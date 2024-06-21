@@ -44,11 +44,6 @@ export function systemDate() {
   return año + "-" + mesFormateado + "-" + diaFormateado;
 }
 
-export function isImageURL(str : string) {
-  const expresionRegular = /^(ftp|http|https):\/\/[^ "]+(\.png|\.jpg|\.jpeg)$/;
-  return expresionRegular.test(str);
-}
-
 export function delay(segs : number) {
   return new Promise(resolve => setTimeout(resolve, segs * 1000));
 }

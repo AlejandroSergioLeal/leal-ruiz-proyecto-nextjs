@@ -12,7 +12,9 @@ export default function Filter() {
         "Todos",
         "Rock",
         "Pop",
-        "Hip Hop"
+        "Hip Hop",
+        "Indie",
+        "Otros"
     ];
 
    

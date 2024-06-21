@@ -4,10 +4,9 @@ import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { Product } from './definitions';
 import * as dao from '@/lib/dao'
-import {delay} from '@/lib/utils'
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import exp from 'constants';
+import { z } from 'zod';
 
 export async function authenticate(
   prevState: string | undefined,
@@ -28,95 +27,134 @@ export async function authenticate(
   }
 }
 
-export async function redirectToAdmin(){
-  redirect("/admin")
-}
-export async function sendProduct(formData: FormData) {
+export type State = {
+  errors?: {
+    name?: string[];
+    artist?: string[];
+    price?: string[];
+    format?: string[];
+    imgUrl?: string[];
+    descr?: string[];
+    genre?: string[];
+  };
+  message?: string | null;
+};
 
-  // Recupera el valor de cada campo del formulario
-  const nameValue = formData.get("name")?.toString() ?? "";
-  const artistValue = formData.get("artist")?.toString() ?? "";
-  const priceValue = formData.get("price")?.toString().replace(',', '.') ?? "";
-  const formatValue = formData.get("format")?.toString() ?? "";
-  const descriptionValue = formData.get("description")?.toString() ?? "";
-  const imgUrlValue = formData.get("imgUrl")?.toString() ?? "";
-  const genreValue = formData.get("genre")?.toString() ?? "";
-  const habilitado = formData.get("habilitador") === "on"
+export async function sendProduct(prevState: State, formData: FormData): Promise<State> {
+  const validatedFields = FormSchema.safeParse({
+    id: '0',
+    name: formData.get("name"),
+    artist: formData.get("artist"),
+    price: formData.get("price"),
+    format: formData.get("format"),
+    descr: formData.get("description"),
+    imgUrl: formData.get("imgUrl"),
+    genre: formData.get("genre"),
+    state: formData.get("state"),
+  });
+
+  if (!validatedFields.success) {
+    console.log("**")
+    console.log(validatedFields.error.flatten().fieldErrors)
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to create product.',
+    };
+  }
 
   const product: Product = {
     product_id: 0,
-    name: nameValue,
-    artist: artistValue,
-    description: descriptionValue,
-    format: formatValue,
-    genre: genreValue,
-    image: imgUrlValue,
-    price: parseFloat(priceValue),
-    state: habilitado
+    name: validatedFields.data.name,
+    artist: validatedFields.data.artist,
+    description: validatedFields.data.descr,
+    format: validatedFields.data.format,
+    genre: validatedFields.data.genre,
+    image: validatedFields.data.imgUrl,
+    price: validatedFields.data.price,
+    state: validatedFields.data.state === 'on'
   }
 
   try {
-    const result = await dao.insertProduct(product);
-    if (result != null) {
-      revalidatePath("/")
-      revalidatePath("/products")
-      revalidatePath("/admin")
-    }
-    return result;
-
+    await dao.insertProduct(product);
   } catch (error) {
     console.error('Error inserting product:', error);
-    throw error;
+    return {
+      message: 'failed',
+    };
+  }
+  revalidatePath("/")
+  revalidatePath("/products")
+  revalidatePath("/admin")
+
+
+  return {
+    errors: {},
+    message: "success"
   }
 }
 
-export async function updateProduct(id: number, formData: FormData) {
+export async function updateProduct(prevState: State, formData: FormData): Promise<State> {
+  const validatedFields = FormSchema.safeParse({
+    id: formData.get("product_id"),
+    name: formData.get("name"),
+    artist: formData.get("artist"),
+    price: formData.get("price"),
+    format: formData.get("format"),
+    descr: formData.get("description"),
+    imgUrl: formData.get("imgUrl"),
+    genre: formData.get("genre"),
+    state: formData.get("state"),
+  });
 
-  // Recupera el valor de cada campo del formulario
-  const nameValue = formData.get("name")?.toString() ?? "";
-  const artistValue = formData.get("artist")?.toString() ?? "";
-  const priceValue = formData.get("price")?.toString().replace(',', '.') ?? "";
-  const formatValue = formData.get("format")?.toString() ?? "";
-  const descriptionValue = formData.get("description")?.toString() ?? "";
-  const imgUrlValue = formData.get("imgUrl")?.toString() ?? "";
-  const genreValue = formData.get("genre")?.toString() ?? "";
-  const habilitado = formData.get("habilitador") === "on"
-
+  if (!validatedFields.success) {
+    console.log("**")
+    console.log(validatedFields.error.flatten().fieldErrors)
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to edit product.',
+    };
+  }
+  const id = validatedFields.data.id;
   const product: Product = {
     product_id: id,
-    name: nameValue,
-    artist: artistValue,
-    description: descriptionValue,
-    format: formatValue,
-    genre: genreValue,
-    image: imgUrlValue,
-    price: parseFloat(priceValue),
-    state: habilitado
+    name: validatedFields.data.name,
+    artist: validatedFields.data.artist,
+    description: validatedFields.data.descr,
+    format: validatedFields.data.format,
+    genre: validatedFields.data.genre,
+    image: validatedFields.data.imgUrl,
+    price: validatedFields.data.price,
+    state: validatedFields.data.state === 'on'
   }
-  console.log(product)
+
   try {
-    const result = await dao.updateProduct(product);
-    if(result){
-      revalidatePath("/")
-      revalidatePath("/products")
-      revalidatePath("/admin")
-      revalidatePath(`/product/${id}`)
-      revalidatePath(`/admin/edit/${id}`)
-    }
+    await dao.updateProduct(product);
   } catch (error) {
     console.error('Error updating product:', error);
-    throw error;
+    return {
+      message: 'failed',
+    };
+  }
+  revalidatePath("/")
+  revalidatePath("/products")
+  revalidatePath("/admin")
+  revalidatePath(`/product/${id}`)
+  revalidatePath(`/admin/edit/${id}`)
+
+  return {
+    errors: {},
+    message: "success"
   }
 }
 
 
-export async function deleteProduct(id: number){
+export async function deleteProduct(id: number) {
   console.log("delete");
   console.log(id);
 
   try {
     const result = await dao.deleteProduct(id);
-    if(result){
+    if (result) {
       revalidatePath("/")
       revalidatePath("/products")
       revalidatePath("/admin")
@@ -124,7 +162,7 @@ export async function deleteProduct(id: number){
       revalidatePath(`/admin/edit/${id}`)
       redirect("/admin")
     }
-    else{
+    else {
       //mostrar error
       console.log("..")
     }
@@ -133,3 +171,32 @@ export async function deleteProduct(id: number){
     throw error;
   }
 }
+
+
+const FormSchema = z.object({
+  id: z.string()
+    .transform(val => parseInt(val)), // to number
+  name: z.string()
+    .min(1, { message: "Ingrese el nombre del álbum" })
+    .max(100, { message: "El nombre del álbum no debe superar los 100 caracteres" }),
+  artist: z.string()
+    .min(1, { message: "Ingrese el nombre del artista" })
+    .max(100, { message: "El nombre del artista no debe superar los 100 caracteres" }),
+  price: z.string()
+    .regex(/^[0-9]{1,8}([.,][0-9]{1,2})?$/, { message: 'Ingrese un monto válido' })
+    .transform(val => parseFloat(val.replace(',', '.'))) // to number
+    .refine(val => val > 0, { message: 'Ingrese un monto mayor a 0' }),
+  format: z.string({
+    invalid_type_error: 'Por favor elija un formato.',
+  }),
+  imgUrl: z.string()
+    .url({ message: "Ingrese una URL válida" })
+    .refine(url => url.startsWith("https://res.cloudinary.com"), {
+      message: "ingrese una URL de Cloudinary",
+    }),
+  descr: z.string().max(255, { message: "Ha superado el limite de caracteres para la descripcion del producto" }),
+  state: z.string().nullable(),
+  genre: z.string({
+    invalid_type_error: 'Por favor elija un género.',
+  }),
+});
