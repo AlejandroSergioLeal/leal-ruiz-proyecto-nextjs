@@ -7,6 +7,7 @@ import * as dao from '@/lib/dao'
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { MercadoPagoConfig, Preference } from 'mercadopago';
 
 export async function authenticate(
   prevState: string | undefined,

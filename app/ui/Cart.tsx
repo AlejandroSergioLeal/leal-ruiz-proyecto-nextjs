@@ -7,14 +7,10 @@ import { Product } from '@/lib/definitions';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from './button';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
-import { useToast } from '@/components/ui/use-toast';
-
 
 export type CartItem = Product & {
   quantity: number
 }
-
-
 
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext);
@@ -39,6 +35,8 @@ const Cart = () => {
   const handleClick = async () => {
     try {
       const email = prompt('Por favor, ingrese su email:');
+
+      //esto tambien crea la fila en Sales y Details
       const response = await fetch('/api/preference', {
         method: 'POST',
         headers: {
@@ -48,13 +46,11 @@ const Cart = () => {
       });
       const data = await response.json();
       setPreferenceId(data.preferenceId);
+
     } catch (error) {
       console.error('Error creating preference:', error);
     }
   };
-
- 
-
 
   return (
     <Sheet>
@@ -119,7 +115,7 @@ const Cart = () => {
                     className={cn(buttonVariants({ variant: 'default' }), 'px-4 py-2 mt-4')}
                     onClick={handleClick}
                   >
-                    Procesar pago
+                    Procesar pedido
                   </Button>
                 )}
                 {preferenceId && <Wallet initialization={{ preferenceId }} />}

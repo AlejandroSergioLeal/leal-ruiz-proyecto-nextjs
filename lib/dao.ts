@@ -3,6 +3,54 @@ import { sql } from '@vercel/postgres';
 import { Product, User } from './definitions';
 import { delay, systemDate } from './utils';
 
+interface CartItem extends Product {
+  id: number;
+  quantity: number;
+}
+
+export async function completeSale(id: string, customer: string, p_id: number) {
+  try {
+    await sql`
+      UPDATE sales
+      SET t_ID_MP = ${p_id},
+          customer = ${customer},
+          completed = true
+      WHERE sale_id = ${id}
+    `;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("Failed to complete sale.");
+  }
+}
+
+export async function createSale(email: string, items:CartItem[]){
+  try{
+  console.log(email)
+   const { rows } = await sql`
+      INSERT INTO sales (date, t_ID_MP, person_email) 
+      VALUES (NOW(), null, ${email}) 
+      RETURNING sale_id
+    `;
+    
+    console.log("sale_id:", rows[0].sale_id);
+    const sale_id = rows[0].sale_id;
+ 
+    for (const item of items) {
+          await sql`
+            INSERT INTO sales_details
+              (price, quantity, subtotal, sale_id, product_id) 
+            VALUES (${item.price}, ${item.quantity}, ${item.price * item.quantity}, ${sale_id}, ${item.product_id})
+          `;
+    }
+
+    return sale_id
+  }
+  catch(error){
+    console.error('Database Error:', error);
+    throw Error('Failed to create sale');
+  }
+}
+
 export async function insertProduct(p: Product): Promise<Product> {
   try {
     //

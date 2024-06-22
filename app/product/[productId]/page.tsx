@@ -62,12 +62,12 @@ export default async function ProductPage({ params }: { params: { productId: num
             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Género:</h3>
             <p className="text-gray-600 dark:text-gray-400">{producto.genre}</p>
           </div>
-          <div className="grid gap-2 mt-4">
-            <h3 className="text-xl font-semibold underline text-gray-800 dark:text-gray-200">Formato:</h3>
+          <div className="grid gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Formato:</h3>
             <p className="text-gray-600 dark:text-gray-400">{producto.format}</p>
           </div>
-          <div className="grid gap-2 mt-4">
-            <h3 className="text-xl font-semibold underline text-gray-800 dark:text-gray-200">Tracklist:</h3>
+          <div className="grid gap-2">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Tracklist:</h3>
             {tracklist.length > 0 ? (
               <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400">
                 {tracklist.map((track, index) => (
