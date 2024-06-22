@@ -29,8 +29,10 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
         const name = payer.first_name!!;
         const lastname = payer.last_name!!;
         const sale_id = payment.external_reference;
-        if(sale_id && payment_id)
-            await dao.completeSale(sale_id,`${name} ${lastname}`,payment_id)
+        if(sale_id && payment_id){
+            const sid = parseInt(sale_id)
+            await dao.completeSale(sid,`${name} ${lastname}`,payment_id)
+        }
         else
          ;//
     }
