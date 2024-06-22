@@ -7,8 +7,7 @@ import { Product } from '@/lib/definitions';
 
 
 export async function GET() {
-    const products = await sql<Product[]>`SELECT name, artist, price FROM products`;
-
+    const products = await sql<Product[]>`SELECT name, artist, price, description FROM products`;
     const data = products.rows;
     return NextResponse.json(data);
 }

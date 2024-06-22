@@ -132,7 +132,6 @@ export default function ProductEditForm({ product }: { product: Product }) {
                                 <option>LP</option>
                                 <option>EP</option>
                                 <option>Double-LP</option>
-                                <option></option>
                             </select>
                             <div id="format-error" aria-live="polite" aria-atomic="true" className="mb-2">
                                 {state.errors?.format &&

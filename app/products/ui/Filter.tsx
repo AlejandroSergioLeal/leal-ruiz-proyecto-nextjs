@@ -12,7 +12,7 @@ export default function Filter() {
         "Todos",
         "Rock",
         "Pop",
-        "Hip Hop",
+        "Hip-Hop",
         "Indie",
         "Otros"
     ];
@@ -30,7 +30,7 @@ export default function Filter() {
       }, 300);
 
     return (
-        <div className="flex flex-col md:flex-row gap-8 p-5">
+        <div className="flex flex-col md:flex-row gap-8 px-5 py-2 mb-5 rounded bg-white shadow-md">
             <div className='flex flex-col text-center w-full'>
                 <div className='flex flex-wrap justify-center gap-4'>
                     {generos.map((genre) => (

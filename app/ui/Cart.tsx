@@ -83,7 +83,10 @@ const Cart = () => {
                 <div className="flex justify-between items-center p-4 bg-white shadow-md rounded-md" key={item.product_id}>
                   <div className="flex gap-4">
                     <div className="flex flex-col">
-                      <h1 className="text-lg font-bold">{item.name}</h1>
+                      <div className = "flex flex-row items-center">
+                        <h1 className="text-lg font-bold">${item.name}</h1>
+                        <h2 className= "text-md ml-3">{(item.quantity > 1)? (`(x${item.quantity})`) : ""}</h2>
+                      </div>
                       <p className="text-gray-600">${item.price}</p>
                     </div>
                   </div>
