@@ -1,9 +1,10 @@
+'use server'
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import * as dao from "@/lib/dao"
 import Link from "next/link";
-import ErrorAlert from "@/app/admin/ErrorAlert";
 import CheckIcon from "../ui/CheckIcon";
 import FailIcon from "../ui/FailIcon";
+import { revalidatePath } from "next/cache";
 
 interface SearchParams {
     collection_id: string;
@@ -33,6 +34,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
             const sid = parseInt(sale_id, 10);
             const pid = parseInt(paymentId, 10);
             await dao.completeSale(sid, pid);
+            revalidatePath("/")
         }
         else {
             throw Error("no sale_id found")
