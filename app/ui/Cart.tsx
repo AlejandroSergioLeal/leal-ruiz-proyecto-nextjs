@@ -91,12 +91,14 @@ const Cart = () => {
                     <button
                       className="px-4 py-2 bg-black text-white text-xs font-bold uppercase rounded hover:bg-gray-800 focus:outline-none focus:bg-gray-800"
                       onClick={() => {addToCart(item)}}
+                      aria-label = "agregar otra unidad la carrito"
                     >
                       +
                     </button>
                     <button
                       className="px-4 py-2 bg-gray-600 text-white text-xs font-bold uppercase rounded hover:bg-gray-500 focus:outline-none focus:bg-gray-500"
                       onClick={() => removeFromCart(item)}
+                      aria-label = "quitar una unidad del carrito"
                     >
                       -
                     </button>
@@ -108,6 +110,7 @@ const Cart = () => {
                 <Button
                   className={cn(buttonVariants({ variant: 'destructive' }), 'px-4 py-2 mt-4')}
                   onClick={clearCart}
+                  aria-label= "vaciar carrito"
                 >
                   Vaciar carrito
                 </Button>
@@ -115,6 +118,7 @@ const Cart = () => {
                   <Button
                     className={cn(buttonVariants({ variant: 'default' }), 'px-4 py-2 mt-4')}
                     onClick={handleClick} disabled = {btnPressed}
+                    aria-label = "terminar pedido y procesar compra"
                   >
                     Procesar pedido
                   </Button>

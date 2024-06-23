@@ -12,11 +12,11 @@ function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         pending ? (
-            <button className="btn btn-warning m-2 animate-none" disabled>
+            <button className="btn btn-warning m-2 animate-none" disabled aria-label="se estan guardando los cambios">
                 Procesando...
             </button>
         ) : (
-            <button type="submit" className="btn btn-warning m-2 animate-none" >
+            <button type="submit" className="btn btn-warning m-2 animate-none" aria-label="guardar cambios">
                 Guardar Cambios
             </button>
         )
@@ -27,7 +27,7 @@ function CancelButton() {
     const { pending } = useFormStatus();
     return (
         pending ? (<div className="btn btn-neutral m-2 animate-none">...</div>) : (
-            <Link href="/admin" className="btn btn-neutral m-2 animate-none">
+            <Link href="/admin" className="btn btn-neutral m-2 animate-none" aria-label="descartar cambios">
                 Cancelar
             </Link >
         )

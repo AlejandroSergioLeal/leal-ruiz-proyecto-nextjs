@@ -38,6 +38,7 @@ export default function Filter() {
                             key={genre}
                             className='p-2 bg-white rounded-lg shadow-md cursor-pointer'
                             onClick={() => handleSearch(genre)}
+                            aria-label = {`discos del genero ${genre}`}
                         >
                             {genre}
                         </button>

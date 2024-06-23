@@ -9,6 +9,7 @@ export default function NotFound() {
       <p className="text-center text-xl text-gray-500">No pudimos encontrar tu producto.</p>
       <Link
         href="/"
+        aria-label="volver a inicio"
         className="mt-4 rounded-md bg-light-custom-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-light-custom-blue-400"
       >
         Volver al Inicio

@@ -13,6 +13,7 @@ export default function RootLayout({
   return (
    <CartProvider>
    <html lang="en" className="h-full">
+    <title> Pagina principal de vinyl paradise </title>
       <body className= {`${montserrat.className} antialiased `}>
         <main className= 'relative flex flex-col min-h-screen'>
           <div className='flex-grow flex-1'>

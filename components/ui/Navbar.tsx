@@ -13,7 +13,7 @@ const Navbar = () => {
       <MaxWidthWrapper>
         <div className='flex h-14 items-center justify-between'>
           <div className='flex items-center space-x-4'>
-            <Link href='/' className='flex z-40 font-semibold items-center'>
+            <Link href='/' className='flex z-40 font-semibold items-center' aria-label="volver a inicio">
               <Icons.logo className='w-8 h-8' />
               vinyl <span className='text-light-custom-blue-500'>paradise</span>
             </Link>
@@ -29,7 +29,7 @@ const Navbar = () => {
               }}
               className='flex items-center'
             >
-              <button>
+              <button aria-label = "cerrar sesion">
                 <LogOut className='w-5 h-5 transform transition-transform duration-200 hover:scale-110' />
               </button>
             </form>

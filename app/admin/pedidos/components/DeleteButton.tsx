@@ -36,7 +36,7 @@ export default function DeleteButton({ nro }: { nro: number}) {
     return (
 
         <AlertDialog open={isOpen}>
-            <AlertDialogTrigger className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-error" onClick={handleTrigger}>
+            <AlertDialogTrigger className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-error" onClick={handleTrigger} aria-label ="Eliminar pedido">
                 Eliminar
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -47,10 +47,10 @@ export default function DeleteButton({ nro }: { nro: number}) {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel onClick={handleCancel} className = {`${isDeleting? "hidden" : ""}`}>
+                    <AlertDialogCancel onClick={handleCancel} className = {`${isDeleting? "hidden" : ""}`} aria-label = "cancelar eliminacion">
                         Cancelar
                     </AlertDialogCancel>
-                    <AlertDialogAction onClick={elim}>
+                    <AlertDialogAction onClick={elim} aria-label= "eliminar el pedido de forma permanente" >
                        {!isDeleting? "Continuar": "Eliminando..."} 
                     </AlertDialogAction>
                 </AlertDialogFooter>

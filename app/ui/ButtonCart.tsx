@@ -20,6 +20,7 @@ return (
     <Button
         className={cn(buttonVariants({ variant: 'default' }), 'w-full')}
         onClick={handleClick}
+        aria-label= "agregar este producto al carrito"
     >
         Agregar al carrito
     </Button>

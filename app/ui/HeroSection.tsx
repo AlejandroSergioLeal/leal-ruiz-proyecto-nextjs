@@ -17,7 +17,7 @@ export default function HeroSection() {
             Bienvenido a Vinyl Paradise. Tu tienda de música online. 
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-12 sm:mt-6 py-10 ">
-            <Link href="/products" className={cn(buttonVariants(), "pointer-events-auto")}>
+            <Link href="/products" className={cn(buttonVariants(), "pointer-events-auto")} aria-label="ver catalogo completo">
               Ver Catálogo
             </Link>
           </div>

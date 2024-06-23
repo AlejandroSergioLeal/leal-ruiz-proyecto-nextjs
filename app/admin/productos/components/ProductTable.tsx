@@ -34,8 +34,10 @@ export default async function ProductTable({
                                         {prod.state ? (<p>Si</p>) : (<p>No</p>)}
                                     </td>
                                     <td className="flex justify-end space-x-2">
-                                        <Link href={`productos/edit/${prod.product_id}`}>
-                                            <button className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-neutral">Editar</button>
+                                        <Link href={`productos/edit/${prod.product_id}`} aria-label={`editar producto ${prod.name}`}>
+                                            <button className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-neutral" aria-label={`editar producto ${prod.name}`}>
+                                                Editar
+                                            </button>
                                         </Link>
                                             <DeleteAlert prod_id = {prod.product_id} name = {prod.name} artist = {prod.artist}/>   
                                     </td>

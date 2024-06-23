@@ -22,8 +22,8 @@ export default async function AdmProdsPage({
         <div className="sm:px-5">
             <div className="flex flex-row mx-auto mb-6">
                 <SearchBar placeholder="Search..." />
-                <Link href="productos/create">
-                    <button className="btn btn-success text-white ml-2">
+                <Link href="productos/create" aria-label="crear un nuevo producto">
+                    <button className="btn btn-success text-white ml-2" aria-label="crear un nuevo producto">
                         <span className="hidden sm:inline">+ Crear Producto</span>
                         <span className="sm:hidden">+</span>
                     </button>

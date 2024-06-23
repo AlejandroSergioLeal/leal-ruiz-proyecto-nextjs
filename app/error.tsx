@@ -21,6 +21,7 @@ export default function Error({
       <Link
         href="/"
         className="mt-4 rounded-md bg-light-custom-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-light-custom-blue-400"
+        aria-label = "volver a inicio"
       >
         Volver al Inicio
       </Link>

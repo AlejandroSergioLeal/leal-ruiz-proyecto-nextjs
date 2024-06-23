@@ -23,7 +23,7 @@ export default function ErrorAlert({ title, desc }: { title: string, desc: strin
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <Link href="/admin/productos" className="btn btn-error text-white">
+                    <Link href="/admin/productos" className="btn btn-error text-white" aria-label = "aceptar">
                         Aceptar
                     </Link>
                 </AlertDialogFooter>

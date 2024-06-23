@@ -28,6 +28,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
             <Link
                 href="/"
                 className="btn btn-error text-white m-5"
+                aria-label="volver a inicio"
             >
                 Volver al Inicio
             </Link>
