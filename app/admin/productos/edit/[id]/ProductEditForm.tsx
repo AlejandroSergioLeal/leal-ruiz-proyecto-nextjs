@@ -56,7 +56,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                     <div className="flex flex-col sm:mr-4">
                         {/*album: */}
                         <div>
-                            <label className="mb-2">
+                            <label htmlFor ="name" className="mb-2">
                                 Nombre del álbum:
                             </label>
                             <input
@@ -77,7 +77,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*artista: */}
                         <div>
-                            <label className="mb-2">
+                            <label htmlFor ="artist" className="mb-2">
                                 Artista:
                             </label>
                             <input
@@ -98,7 +98,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*precio: */}
                         <div>
-                            <label className="mb-2">
+                            <label htmlFor ="price" className="mb-2">
                                 Precio:
                             </label>
                             <input
@@ -119,7 +119,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*formato: */}
                         <div>
-                            <label className="mb-2">
+                            <label htmlFor ="format" className="mb-2">
                                 Formato:
                             </label>
                             <select className="select select-bordered select-sm w-full min-w-lg max-w-lg"
@@ -144,7 +144,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*genero: */}
                         <div className="flex flex-col">
-                            <label className="mb-2">
+                            <label htmlFor ="genre" className="mb-2">
                                 Género:
                             </label>
                             <select className="select select-bordered select-sm w-full min-w-lg max-w-lg"
@@ -170,7 +170,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*descripcion: */}
                         <div className="flex flex-col">
-                            <label className="mb-2 mt-2">
+                            <label htmlFor ="description" className="mb-2 mt-2">
                                 Descripción breve:
                             </label>
                             <textarea
@@ -203,7 +203,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         />
                         {/* Url de la imagen: */}
                         <div>
-                            <label className="mb-2">
+                            <label htmlFor ="imgUrl" className="mb-2">
                                 URL de imagen:
                             </label>
                             <input
@@ -225,7 +225,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/* checkbox habilitar producto: */}
                         <div className="form-control">
-                            <label className="label cursor-pointer flex items-center justify-start">
+                            <label htmlFor ="state" className="label cursor-pointer flex items-center justify-start">
                                 <input
                                     id="state"
                                     type="checkbox"

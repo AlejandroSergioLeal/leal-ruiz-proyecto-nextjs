@@ -19,7 +19,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className='flex items-center space-x-4 md:mr-0 md:ml-auto'>
-            <Link href='/login' className='flex items-center gap-1'>
+            <Link href='/login' className='flex items-center gap-1' aria-label="loguearse">
               <UserRound className='w-5 h-5 transform transition-transform duration-200 hover:scale-110' />
             </Link>
             <form

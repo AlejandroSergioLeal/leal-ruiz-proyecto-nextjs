@@ -7,7 +7,7 @@ import { buttonVariants } from "./button";
 
 export default function HeroSection() {
   return (
-    <div className="relative bg-cover bg-center" style={{ backgroundImage: 'url(/herov.png)' }}>
+    <div className="relative bg-cover bg-center" style={{ backgroundImage: 'url(https://res.cloudinary.com/dpjdvyupb/image/upload/f_auto,q_auto/v1/vinylparadise/aqbo0nw9jwcz6sbyf0gx)' }}>
       <MaxWidthWrapper className="mb-1 md:mb-12 lg:mb-0 pb-10 pt-10 py-20">
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
           <h1 className="pt-10 text-4xl py-10 font-bold tracking-tight text-white lg:text-6xl md:text-6xl">
