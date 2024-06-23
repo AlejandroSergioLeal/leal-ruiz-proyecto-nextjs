@@ -23,14 +23,8 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
     try {
         const payment = await new Payment(client).get({ id: paymentId });
 
-        const addittionalInfo = payment.additional_info!!;
-        const payer = addittionalInfo.payer!!;
-
-        const payment_id = payment.id;
-        const name = payer.first_name!!;
-        const lastname = payer.last_name!!;
         const sale_id = payment.external_reference;
-        if (sale_id && payment_id) {
+        if (sale_id && paymentId) {
             const sid = parseInt(sale_id, 10); // ParseInt con base 10
             if (!isNaN(sid)) { // Verificar que sid es un número válido
                 await dao.completeSale(sid);
