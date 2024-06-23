@@ -23,7 +23,7 @@ export default function SuccessAlert({ title, desc }: { title: string, desc: str
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <Link href="/admin" className="btn btn-error text-white">
+                    <Link href="/admin/productos" className="btn btn-error text-white">
                         Aceptar
                     </Link>
                 </AlertDialogFooter>

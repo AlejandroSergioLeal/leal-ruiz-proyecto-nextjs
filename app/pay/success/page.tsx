@@ -34,7 +34,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
             const sid = parseInt(sale_id, 10);
             const pid = parseInt(paymentId, 10);
             await dao.completeSale(sid, pid);
-            revalidatePath("/")
+            revalidatePath(`/admin/pedido/${sale_id}`)
         }
         else {
             throw Error("no sale_id found")

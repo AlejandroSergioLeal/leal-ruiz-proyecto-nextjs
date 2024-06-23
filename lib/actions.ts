@@ -158,10 +158,10 @@ export async function deleteProduct(id: number) {
     if (result) {
       revalidatePath("/")
       revalidatePath("/products")
-      revalidatePath("/admin")
+      revalidatePath("/admin/productos")
       revalidatePath(`/product/${id}`)
       revalidatePath(`/admin/edit/${id}`)
-      redirect("/admin")
+      redirect("/admin/productos")
     }
     else {
       //mostrar error
@@ -173,7 +173,27 @@ export async function deleteProduct(id: number) {
   }
 }
 
+export async function deleteSale(id: number) {
+  console.log("delete");
+  console.log(id);
 
+  try {
+    const result = await dao.deleteSale(id);
+    if (result) {
+      revalidatePath("/")
+      revalidatePath("/admin/pedidos")
+      revalidatePath(`/admin/pedidos/${id}`)
+      redirect("/admin/pedidos")
+    }
+    else {
+      //mostrar error
+      console.log("..")
+    }
+  } catch (error) {
+    console.error('Error deleting sale:', error);
+    throw error;
+  }
+}
 const FormSchema = z.object({
   id: z.string()
     .transform(val => parseInt(val)), // to number

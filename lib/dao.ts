@@ -1,6 +1,6 @@
 
 import { sql } from '@vercel/postgres';
-import { Product, User } from './definitions';
+import { Product, Sale, User ,Detail} from './definitions';
 import { delay, systemDate } from './utils';
 
 interface CartItem extends Product {
@@ -8,7 +8,7 @@ interface CartItem extends Product {
   quantity: number;
 }
 
-export async function completeSale(id: number,pid: number) {
+export async function completeSale(id: number, pid: number) {
   try {
     await sql`
       UPDATE sales
@@ -22,20 +22,20 @@ export async function completeSale(id: number,pid: number) {
   }
 }
 
-export async function createSale(email: string, items:CartItem[]){
-  try{
-  console.log(email)
-   const { rows } = await sql`
+export async function createSale(email: string, items: CartItem[]) {
+  try {
+    console.log(email)
+    const { rows } = await sql`
       INSERT INTO sales (date, t_ID_MP, person_email) 
       VALUES (NOW(), null, ${email}) 
       RETURNING sale_id
     `;
-    
+
     console.log("sale_id:", rows[0].sale_id);
     const sale_id = rows[0].sale_id;
- 
+
     for (const item of items) {
-          await sql`
+      await sql`
             INSERT INTO sales_details
               (price, quantity, subtotal, sale_id, product_id) 
             VALUES (${item.price}, ${item.quantity}, ${item.price * item.quantity}, ${sale_id}, ${item.product_id})
@@ -44,7 +44,7 @@ export async function createSale(email: string, items:CartItem[]){
 
     return sale_id
   }
-  catch(error){
+  catch (error) {
     console.error('Database Error:', error);
     throw Error('Failed to create sale');
   }
@@ -132,6 +132,32 @@ export async function getAllProducts(): Promise<Product[]> {
   }
 }
 
+export async function fetchSaleDetail(sid: number): Promise<Detail[]> {
+  try {
+    //
+    const result = await sql<Detail>`
+      SELECT 
+        s.sale_id,
+        sd.quantity,
+        p.name AS product_name,
+        s.date,
+        s.person_email,
+        s.completed,
+        s.t_id_mp,
+        sd.subtotal
+      FROM 
+        sales_details sd JOIN sales s ON sd.sale_id = s.sale_id JOIN products p ON sd.product_id = p.product_id
+      WHERE 
+        sd.sale_id = ${sid};`
+    return result.rows;
+  }
+  catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch sale detail.');
+  }
+}
+
+
 export async function getMostRecentProducts(): Promise<Product[]> {
   try {
     const cant = 10;
@@ -179,6 +205,18 @@ export async function deleteProduct(product_id: number) {
   }
 }
 
+export async function deleteSale(id: number) {
+  try {
+    //
+    await sql`DELETE FROM sales_details WHERE sale_id = ${id}`;
+    await sql`DELETE FROM sales WHERE sale_id = ${id}`;
+    return true;
+  }
+  catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to delete.');
+  }
+}
 export async function getUser(email: string): Promise<User> {
   try {
     //
@@ -260,6 +298,20 @@ export async function fetchTotalPages(query: string) {
   }
 }
 
+export async function fetchTotalSalesPages() {
+  //
+  try {
+    const count = await sql`SELECT COUNT(*)
+      FROM sales
+    `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / itemsPerPage);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of sales.');
+  }
+}
 
 export async function fetchFilteredActiveProducts(
   query: string,
@@ -285,6 +337,23 @@ export async function fetchFilteredActiveProducts(
 
 }
 
+export async function fetchFilteredSales(
+  currentPage: number,
+) {
+  try {
+    const offset = (currentPage - 1) * itemsPerPage;
+
+    const result = await sql<Sale>`
+        SELECT * FROM sales
+        LIMIT ${itemsPerPage} OFFSET ${offset};
+      `;
+    return result.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch sales.');
+  }
+
+}
 
 export async function fetchTotalActivePages(query: string) {
   try {

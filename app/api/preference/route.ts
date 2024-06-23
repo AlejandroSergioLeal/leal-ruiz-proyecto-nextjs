@@ -1,6 +1,7 @@
 import { CartItem } from '@/app/ui/Cart';
 import { createSale } from '@/lib/dao';
 import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 const client = new MercadoPagoConfig({ accessToken: 'TEST-17174604455274-061114-3b85e204615d83600f92b14dc57416cc-569969267' });
@@ -9,7 +10,7 @@ export async function POST(request: NextRequest) {
   try {
     const { items, email } = await request.json();
     const sale_id = await createSale(email,items)
-
+    revalidatePath("/admin/pedidos")
     // Crea la preferencia en MercadoPago
     const preference = new Preference(client);
 
