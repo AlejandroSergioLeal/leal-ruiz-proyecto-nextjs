@@ -8,7 +8,7 @@ interface CartItem extends Product {
   quantity: number;
 }
 
-export async function completeSale(id: string, customer: string, p_id: number) {
+export async function completeSale(id: number, customer: string, p_id: number) {
   try {
     await sql`
       UPDATE sales
