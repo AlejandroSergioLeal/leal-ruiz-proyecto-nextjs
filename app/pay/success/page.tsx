@@ -1,5 +1,6 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import * as dao from "@/lib/dao"
+import PageLoader from "next/dist/client/page-loader";
 
 interface SearchParams {
     collection_id: string;
@@ -38,5 +39,10 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
     }
     catch(error){
         console.log("error payment");
+        return(<div>error</div>)
     }
+    return(
+
+        <div>hola</div>
+    )
 }
