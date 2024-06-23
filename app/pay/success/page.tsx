@@ -33,7 +33,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
         if (sale_id && payment_id) {
             const sid = parseInt(sale_id, 10); // ParseInt con base 10
             if (!isNaN(sid)) { // Verificar que sid es un número válido
-                await dao.completeSale(sid, `${name} ${lastname}`, payment_id);
+                await dao.completeSale(sid);
             } else {
                 return(<div>sale_id</div>)
             }

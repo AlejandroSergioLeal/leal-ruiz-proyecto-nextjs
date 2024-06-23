@@ -8,12 +8,11 @@ interface CartItem extends Product {
   quantity: number;
 }
 
-export async function completeSale(id: number, customer: string, p_id: number) {
+export async function completeSale(id: number) {
   try {
     await sql`
       UPDATE sales
-      SET t_ID_MP = ${p_id},
-          customer = ${customer},
+      SET t_ID_MP = 1,
           completed = true
       WHERE sale_id = ${id}
     `;
