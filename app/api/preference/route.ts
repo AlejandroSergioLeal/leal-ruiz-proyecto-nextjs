@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
         back_urls: {
           success: 'https://leal-ruiz-proyecto-nextjs.vercel.app/pay/success',
           failure: 'https://leal-ruiz-proyecto-nextjs.vercel.app/pay/failed'
-          //pending: 'https://leal-ruiz-proyecto-nextjs.vercel.app/products'
         },
         auto_return: 'approved',
         items: items.map((item: CartItem) => ({

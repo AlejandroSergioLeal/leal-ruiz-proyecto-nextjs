@@ -1,6 +1,9 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import * as dao from "@/lib/dao"
-import PageLoader from "next/dist/client/page-loader";
+import Link from "next/link";
+import ErrorAlert from "@/app/admin/ErrorAlert";
+import CheckIcon from "../ui/CheckIcon";
+import FailIcon from "../ui/FailIcon";
 
 interface SearchParams {
     collection_id: string;
@@ -14,7 +17,9 @@ interface SearchParams {
 
 }
 
+
 export default async function Page({ searchParams }: { searchParams: SearchParams }) {
+    let failed = false;
     const paymentId = searchParams.payment_id;
     const client = new MercadoPagoConfig({
         accessToken: 'TEST-17174604455274-061114-3b85e204615d83600f92b14dc57416cc-569969267'
@@ -25,23 +30,51 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
 
         const sale_id = payment.external_reference;
         if (sale_id) {
-            const sid = parseInt(sale_id, 10); // ParseInt con base 10
-            const pid = parseInt(paymentId, 10); // ParseInt con base 10
-            if (!isNaN(sid)) { // Verificar que sid es un número válido
-                await dao.completeSale(sid,pid);
-            } else {
-                return(<div>sale_id</div>)
-            }
-        } else {
-            return(<div>sale_id or payment_id is missing</div>)
+            const sid = parseInt(sale_id, 10);
+            const pid = parseInt(paymentId, 10);
+            await dao.completeSale(sid, pid);
+        }
+        else {
+            throw Error("no sale_id found")
         }
     }
-    catch(error){
-        console.log("error payment");
-        return(<div>error</div>)
+    catch (error) {
+        console.log(error);
+        failed = true;
     }
-    return(
 
-        <div>hola</div>
+    return (
+        failed ?
+            (
+                <div className="flex flex-col items-center w-full h-screen">
+                    <FailIcon />
+                    <div className="flex flex-col items-center m-5">
+                        <h1 className="text-2xl font-bold mb-2">Lamentamos las molestias</h1>
+                        <p className="text-xl">Ocurrio un error durante la confirmacion de su compra, por favor ponganse en contacto con nosotros</p>
+                    </div>
+
+                    <Link
+                        href="/"
+                        className="btn btn-error text-white m-5"
+                    >
+                        Volver al Inicio
+                    </Link>
+                </div>
+            ) : (
+                <div className="flex flex-col items-center w-full h-screen">
+                    <CheckIcon/>
+                    <div className="flex flex-col items-center m-5">
+                        <h1 className="text-2xl font-bold mb-2">¡Gracias por su compra!</h1>
+                        <p className="text-xl">Su pago fue registrado.</p>
+                    </div>
+
+                    <Link
+                        href="/"
+                        className="btn btn-success text-white m-5"
+                    >
+                        Volver al Inicio
+                    </Link>
+                </div>
+            )
     )
 }
