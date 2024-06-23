@@ -1,6 +1,6 @@
 
 import { sql } from '@vercel/postgres';
-import { Product, Sale, User ,Detail} from './definitions';
+import { Product, Sale, User, Detail } from './definitions';
 import { delay, systemDate } from './utils';
 
 interface CartItem extends Product {
@@ -176,14 +176,23 @@ export async function getProductsByMaxSales() {
     const cant = 10;
     const result = await sql<Product>`
     SELECT 
-      products.*
+        products.*
     FROM 
-      sales_details JOIN products ON sales_details.product_id = products.product_id
-    WHERE state = 'true'
-    GROUP BY products.product_id
-    ORDER BY SUM(sales_details.quantity) DESC
+        sales_details
+    JOIN 
+        products ON sales_details.product_id = products.product_id
+    JOIN 
+        sales ON sales_details.sale_id = sales.sale_id
+    WHERE 
+        sales.completed = true AND products.state = true
+    GROUP BY 
+        products.product_id
+    ORDER BY 
+        SUM(sales_details.quantity) DESC
     LIMIT ${cant};
 `
+
+
     return result.rows;
   }
   catch (error) {

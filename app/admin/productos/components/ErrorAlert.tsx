@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 
-export default function SuccessAlert({ title, desc }: { title: string, desc: string }) {
+export default function ErrorAlert({ title, desc }: { title: string, desc: string }) {
 
     return (
         <AlertDialog open = {true}>

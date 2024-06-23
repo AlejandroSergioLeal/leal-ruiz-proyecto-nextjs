@@ -17,7 +17,7 @@ const Cart = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false);
-  
+  const [btnPressed,setBtnPressed] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -33,10 +33,11 @@ const Cart = () => {
   }
 
   const handleClick = async () => {
+    if(btnPressed)
+      return;
+    setBtnPressed(true);
     try {
       const email = prompt('Por favor, ingrese su email:');
-
-      //esto tambien crea la fila en Sales y Details
       const response = await fetch('/api/preference', {
         method: 'POST',
         headers: {
@@ -113,7 +114,7 @@ const Cart = () => {
                 {isMounted && cartItems.length > 0 && (
                   <Button
                     className={cn(buttonVariants({ variant: 'default' }), 'px-4 py-2 mt-4')}
-                    onClick={handleClick}
+                    onClick={handleClick} disabled = {btnPressed}
                   >
                     Procesar pedido
                   </Button>

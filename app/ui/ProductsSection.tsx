@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import CarouselSize from './CarouselSize';
 import { Product } from '@/lib/definitions';
 import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper';
-import { CarrouselSkeleton } from '../products/ui/skeletons';
+import { CarrouselSkeleton } from '../products/components/skeletons';
 
 interface ProductsSectionProps {
   title: string;

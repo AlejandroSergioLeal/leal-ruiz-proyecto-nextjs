@@ -1,8 +1,8 @@
 
 import Link from "next/link";
-import Pagination from "../../products/ui/Pagination";
-import SearchBar from "../../products/ui/search";
-import ProductTable from "./ProductTable";
+import Pagination from "../../products/components/Pagination";
+import SearchBar from "../../products/components/search";
+import ProductTable from "./components/ProductTable";
 import * as dao from '@/lib/dao'
 
 export default async function AdmProdsPage({
@@ -22,7 +22,7 @@ export default async function AdmProdsPage({
         <div className="sm:px-5">
             <div className="flex flex-row mx-auto mb-6">
                 <SearchBar placeholder="Search..." />
-                <Link href={`/admin/create`}>
+                <Link href="productos/create">
                     <button className="btn btn-success text-white ml-2">
                         <span className="hidden sm:inline">+ Crear Producto</span>
                         <span className="sm:hidden">+</span>

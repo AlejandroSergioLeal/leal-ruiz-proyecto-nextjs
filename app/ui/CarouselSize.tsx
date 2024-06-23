@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import ProductCard from "./ProductCard";
 import { Product } from "@/lib/definitions";
+import { notFound } from "next/navigation";
 
  interface CarouselProps{
   productFetch: () => Promise<Product[]>;
@@ -16,6 +17,7 @@ import { Product } from "@/lib/definitions";
 
 export async function CarouselSize({productFetch}: CarouselProps) {
   const products = await productFetch();
+  if(!products) notFound();
   return (
     <Carousel className="w-full ">
       <CarouselContent className="mb-2">

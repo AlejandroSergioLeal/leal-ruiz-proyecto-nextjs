@@ -2,7 +2,7 @@
 import MaxWidthWrapper from '@/app/ui/MaxWidthWrapper';
 import * as dao from '@/lib/dao';
 import Image from 'next/image';
-import { getAlbumInfo } from '@/lastfm';
+import { getAlbumInfo } from '@/external/lastfm';
 import CartButton from '@/app/ui/ButtonCart';
 import { notFound } from 'next/navigation';
 

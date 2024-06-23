@@ -1,6 +1,6 @@
 import * as dao from '@/lib/dao';
 import Link from 'next/link';
-import DeleteAlert from '../DeleteAlert';
+import DeleteAlert from './DeleteAlert';
 
 export default async function ProductTable({
     query,
@@ -34,11 +34,10 @@ export default async function ProductTable({
                                         {prod.state ? (<p>Si</p>) : (<p>No</p>)}
                                     </td>
                                     <td className="flex justify-end space-x-2">
-                                        <Link href={`/admin/edit/${prod.product_id}`}>
+                                        <Link href={`productos/edit/${prod.product_id}`}>
                                             <button className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-neutral">Editar</button>
                                         </Link>
-                                            <DeleteAlert prod_id = {prod.product_id} name = {prod.name} artist = {prod.artist}/>
-                                        
+                                            <DeleteAlert prod_id = {prod.product_id} name = {prod.name} artist = {prod.artist}/>   
                                     </td>
                                 </tr>
                             ))

@@ -37,7 +37,7 @@ export default async function SalesTable({
                                         {sale.person_email}
                                     </td>
                                     <td className="flex justify-end space-x-2">
-                                        <Link href={`/admin/pedidos/${sale.sale_id}`}>
+                                        <Link href={`pedidos/${sale.sale_id}`}>
                                             <button className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-primary">Ver Detalle</button>
                                         </Link>
                                         <DeleteButton nro={sale.sale_id}/>

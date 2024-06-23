@@ -1,8 +1,8 @@
 import { sendProduct } from "@/lib/actions";
 import { ChangeEvent, useState } from "react";
 import Image from "next/image";
-import SuccessAlert from "../SuccessAlert";
-import ErrorAlert from "../ErrorAlert";
+import SuccessAlert from "../components/SuccessAlert";
+import ErrorAlert from "../components/ErrorAlert";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Pagination from "../../products/ui/Pagination";
+import Pagination from "../../products/components/Pagination";
 import * as dao from '@/lib/dao'
-import SalesTable from "./SalesTable";
+import SalesTable from "./components/SalesTable";
 
 export default async function PedidosPage({
     searchParams

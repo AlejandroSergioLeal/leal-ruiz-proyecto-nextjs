@@ -1,11 +1,11 @@
 
 import React, { Suspense } from 'react';
-import ProductsWrapper from './ui/ProductsWrapper';
-import Pagination from './ui/Pagination';
+import ProductsWrapper from './components/ProductsWrapper';
+import Pagination from './components/Pagination';
 import * as dao from '@/lib/dao';
-import SearchBar from './ui/search';
-import { SkeletonProductWrapper } from './ui/skeletons';
-import Filter from './ui/Filter';
+import SearchBar from './components/search';
+import { SkeletonProductWrapper } from './components/skeletons';
+import Filter from './components/Filter';
 import MaxWidthWrapper from '../ui/MaxWidthWrapper';
 
 

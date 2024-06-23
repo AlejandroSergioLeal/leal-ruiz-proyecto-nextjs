@@ -85,7 +85,7 @@ export async function sendProduct(prevState: State, formData: FormData): Promise
   }
   revalidatePath("/")
   revalidatePath("/products")
-  revalidatePath("/admin")
+  revalidatePath("/admin/productos")
 
 
   return {
@@ -138,9 +138,9 @@ export async function updateProduct(prevState: State, formData: FormData): Promi
   }
   revalidatePath("/")
   revalidatePath("/products")
-  revalidatePath("/admin")
+  revalidatePath("/admin/productos")
   revalidatePath(`/product/${id}`)
-  revalidatePath(`/admin/edit/${id}`)
+  revalidatePath(`/admin/productos/edit/${id}`)
 
   return {
     errors: {},
@@ -160,7 +160,7 @@ export async function deleteProduct(id: number) {
       revalidatePath("/products")
       revalidatePath("/admin/productos")
       revalidatePath(`/product/${id}`)
-      revalidatePath(`/admin/edit/${id}`)
+      revalidatePath(`/admin/productos/edit/${id}`)
       redirect("/admin/productos")
     }
     else {

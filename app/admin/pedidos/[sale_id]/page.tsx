@@ -1,5 +1,5 @@
 import { fetchSaleDetail } from "@/lib/dao"
-import notFound from "../../../not-found";
+import {notFound} from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { Detail } from "@/lib/definitions";
 

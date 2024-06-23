@@ -3,10 +3,11 @@ import { updateProduct } from "@/lib/actions";
 import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { Product } from "@/lib/definitions";
-import SuccessAlert from "../../SuccessAlert";
-import ErrorAlert from "../../ErrorAlert";
+import SuccessAlert from "../../components/SuccessAlert";
+import ErrorAlert from "../../components/ErrorAlert";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
+
 function SubmitButton() {
     const { pending } = useFormStatus();
     return (
@@ -228,7 +229,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                                 <input
                                     id="state"
                                     type="checkbox"
-                                    defaultChecked
+                                    defaultChecked = {product.state}
                                     name="state"
                                     className="checkbox mr-2" />
                                 <span className="label-text">Habilitado para la compra</span>
