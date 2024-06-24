@@ -37,7 +37,7 @@ export default async function ProductPage({ params }: { params: { productId: num
     <MaxWidthWrapper>
       <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4 bg-gray-100 dark:bg-gray-800 shadow-lg mt-5 mb-5">
         <div className="flex justify-center items-center">
-          <div className="flex flex-col relative w-full max-w-xs md:max-w-none md:w-[500px] md:h-[500px]">
+          <div className="flex flex-col relative w-full max-w-xs md:max-w-none md:w-[500px] md:h-[700px]">
             <Image
               src={producto.image}
               height={500}
@@ -46,7 +46,7 @@ export default async function ProductPage({ params }: { params: { productId: num
               priority 
               className="rounded-lg object-cover w-full h-auto"
             />
-            <p>{producto.description}</p>
+            <p className="break-words max-w-[500px] h-[200px] mt-5">{producto.description}</p>
           </div>
         </div>
         <div className="grid gap-6">
