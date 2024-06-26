@@ -4,7 +4,7 @@ import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
-const client = new MercadoPagoConfig({ accessToken: 'TEST-17174604455274-061114-3b85e204615d83600f92b14dc57416cc-569969267' });
+const client = new MercadoPagoConfig({ accessToken: 'APP_USR-17174604455274-061114-7c71f55557e479587ad7b1948e0d03ab-569969267' });
 
 export async function POST(request: NextRequest) {
   try {
