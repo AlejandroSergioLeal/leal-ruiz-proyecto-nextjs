@@ -1,6 +1,5 @@
 import * as dao from '@/lib/dao';
 import Link from 'next/link';
-import DeleteAlert from './DeleteAlert';
 
 export default async function ProductTable({
     query,
@@ -38,8 +37,7 @@ export default async function ProductTable({
                                             <button className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-neutral" aria-label={`editar producto ${prod.name}`}>
                                                 Editar
                                             </button>
-                                        </Link>
-                                            <DeleteAlert prod_id = {prod.product_id} name = {prod.name} artist = {prod.artist}/>   
+                                        </Link>  
                                     </td>
                                 </tr>
                             ))

@@ -1,7 +1,7 @@
 
 import { sql } from '@vercel/postgres';
 import { Product, Sale, User, Detail } from './definitions';
-import { delay, systemDate } from './utils';
+import { systemDate } from './utils';
 
 interface CartItem extends Product {
   id: number;
@@ -201,31 +201,6 @@ export async function getProductsByMaxSales() {
   }
 }
 
-
-export async function deleteProduct(product_id: number) {
-  try {
-    //
-    await sql`DELETE FROM products WHERE product_id = ${product_id}`;
-    return true;
-  }
-  catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to delete.');
-  }
-}
-
-export async function deleteSale(id: number) {
-  try {
-    //
-    await sql`DELETE FROM sales_details WHERE sale_id = ${id}`;
-    await sql`DELETE FROM sales WHERE sale_id = ${id}`;
-    return true;
-  }
-  catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to delete.');
-  }
-}
 export async function getUser(email: string): Promise<User> {
   try {
     //

@@ -148,52 +148,6 @@ export async function updateProduct(prevState: State, formData: FormData): Promi
   }
 }
 
-
-export async function deleteProduct(id: number) {
-  console.log("delete");
-  console.log(id);
-
-  try {
-    const result = await dao.deleteProduct(id);
-    if (result) {
-      revalidatePath("/")
-      revalidatePath("/products")
-      revalidatePath("/admin/productos")
-      revalidatePath(`/product/${id}`)
-      revalidatePath(`/admin/productos/edit/${id}`)
-      redirect("/admin/productos")
-    }
-    else {
-      //mostrar error
-      console.log("..")
-    }
-  } catch (error) {
-    console.error('Error deleting product:', error);
-    throw error;
-  }
-}
-
-export async function deleteSale(id: number) {
-  console.log("delete");
-  console.log(id);
-
-  try {
-    const result = await dao.deleteSale(id);
-    if (result) {
-      revalidatePath("/")
-      revalidatePath("/admin/pedidos")
-      revalidatePath(`/admin/pedidos/${id}`)
-      redirect("/admin/pedidos")
-    }
-    else {
-      //mostrar error
-      console.log("..")
-    }
-  } catch (error) {
-    console.error('Error deleting sale:', error);
-    throw error;
-  }
-}
 const FormSchema = z.object({
   id: z.string()
     .transform(val => parseInt(val)), // to number

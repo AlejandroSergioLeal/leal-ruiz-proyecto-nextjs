@@ -1,8 +1,6 @@
 import * as dao from '@/lib/dao';
 import Link from 'next/link';
 import {formatDate} from "@/lib/utils";
-import DeleteButton from './DeleteButton';
-
 
 export default async function SalesTable({
     currentPage
@@ -41,7 +39,6 @@ export default async function SalesTable({
                                             <button className="btn btn-xs sm:btn-sm btn-outline ml-2 btn-primary" aria-label={`ver detalle del pedido numero ${sale.sale_id}`}>
                                                 Ver Detalle</button>
                                         </Link>
-                                        <DeleteButton nro={sale.sale_id}/>
                                     </td>
                                 </tr>
                             ))
