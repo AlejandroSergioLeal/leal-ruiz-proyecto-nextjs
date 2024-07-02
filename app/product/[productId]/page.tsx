@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { getAlbumInfo } from '@/external/lastfm';
 import CartButton from '@/app/ui/ButtonCart';
 import { notFound } from 'next/navigation';
+import { auth } from '@/auth';
 
 interface Track {
   name: string;
@@ -14,17 +15,18 @@ interface Track {
 export default async function ProductPage({ params }: { params: { productId: number } }) {
   const pId = params.productId;
   const producto = await dao.getProductById(pId);
+  const session = await auth();
 
-  if(!producto){
+  if (!producto) {
     notFound();
   }
 
-  let tracklist : string[] = [];
+  let tracklist: string[] = [];
   let albumInfo;
-  try{
+  try {
     albumInfo = await getAlbumInfo(producto.artist, producto.name);
   }
-  catch(error){
+  catch (error) {
     albumInfo = null;
   }
   if (albumInfo?.album?.tracks?.track) {
@@ -43,7 +45,7 @@ export default async function ProductPage({ params }: { params: { productId: num
               height={500}
               width={500}
               alt="Product Image"
-              priority 
+              priority
               className="rounded-lg object-cover w-full h-auto"
             />
             <p className="break-words max-w-[500px] h-[200px] mt-5">{producto.description}</p>
@@ -55,9 +57,11 @@ export default async function ProductPage({ params }: { params: { productId: num
             <p className="text-gray-800 dark:text-gray-400 font-bold mb-3">{producto.artist}</p>
             <h2 className="text-2xl text-gray-800 dark:text-gray-200">${producto.price}</h2>
           </div>
-          <div className="grid gap-2 mt-4">
-            <CartButton product={producto}></CartButton>
-          </div>
+          {!session &&
+            <div className="grid gap-2 mt-4">
+              <CartButton product={producto}></CartButton>
+            </div>
+          }
           <div className="grid gap-2 mt-4">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Género:</h3>
             <p className="text-gray-600 dark:text-gray-400">{producto.genre}</p>
