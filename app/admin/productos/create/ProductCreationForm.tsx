@@ -5,16 +5,17 @@ import SuccessAlert from "../components/SuccessAlert";
 import ErrorAlert from "../components/ErrorAlert";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
+import { CldUploadWidget, CloudinaryUploadWidgetInfo } from 'next-cloudinary';
 
 function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         pending ? (
-            <button className="btn btn-accent m-2 animate-none" disabled aria-label = "el producto esta csiendo creado">
+            <button className="btn btn-accent m-2 animate-none" disabled aria-label="el producto esta csiendo creado">
                 Procesando...
             </button>
         ) : (
-            <button type="submit" className="btn btn-accent m-2 animate-none" aria-label= "crear producto">
+            <button type="submit" className="btn btn-accent m-2 animate-none" aria-label="crear producto">
                 Crear Producto
             </button>
         )
@@ -37,13 +38,8 @@ export default function ProductCreationForm() {
     const DEFAULT_IMG: string = "/default_image.png";
     const [imageUrl, setImageUrl] = useState(DEFAULT_IMG)
 
-    function handleImgPreview(event: ChangeEvent<HTMLInputElement>) {
-        const newUrl = event?.target.value;
-        if (newUrl.startsWith('https://res.cloudinary.com')) {
-            setImageUrl(newUrl);
-        }
-        else
-            setImageUrl(DEFAULT_IMG)
+    async function handleImageClick(secure_url: string) {
+        setImageUrl(secure_url)
     }
 
     return (
@@ -127,7 +123,7 @@ export default function ProductCreationForm() {
                                 <option>LP</option>
                                 <option>EP</option>
                                 <option>Double-LP</option>
-                                
+
                             </select>
                             <div id="format-error" aria-live="polite" aria-atomic="true" className="mb-2">
                                 {state.errors?.format &&
@@ -195,18 +191,33 @@ export default function ProductCreationForm() {
                             width={300}
                             onError={() => setImageUrl(DEFAULT_IMG)}
                         />
+                        {/*subir imagen */}
+                        <CldUploadWidget
+                            uploadPreset="ml_default"
+                            onSuccess={(result, { widget }) => {
+                                const secure_url = (result?.info as CloudinaryUploadWidgetInfo)?.secure_url;
+                                handleImageClick(secure_url);
+                                widget.close();
+                            }}
+                            onError={() => { console.log("cloudinary error") }}
+                        >
+                            {({ open }) => {
+                                return (
+                                    <div className="flex flex-col w-full">
+                                        <button type="button" onClick={() => open()} className="btn btn-primary m-2 animate-none" aria-label="subir imagen">
+                                            Subir imagen
+                                        </button>
+                                    </div>
+                                );
+                            }}
+                        </CldUploadWidget>
                         {/* Url de la imagen: */}
                         <div>
-                            <label htmlFor="imgUrl" className="mb-2">
-                                URL de imagen:
-                            </label>
                             <input
+                                type="hidden"
                                 id="imgUrl"
                                 name="imgUrl"
-                                type="text"
-                                className="input input-bordered input-sm w-full min-w-lg max-w-lg"
-                                aria-describedby="imageurl-error"
-                                onChange={handleImgPreview}
+                                value={imageUrl}
                             />
                             <div id="imageurl-error" aria-live="polite" aria-atomic="true" className="mb-2">
                                 {state.errors?.imgUrl &&

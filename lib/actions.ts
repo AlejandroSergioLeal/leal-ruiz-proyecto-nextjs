@@ -49,7 +49,7 @@ export async function sendProduct(prevState: State, formData: FormData): Promise
     price: formData.get("price"),
     format: formData.get("format"),
     descr: formData.get("description"),
-    imgUrl: formData.get("imgUrl"),
+    imgUrl: formData.get("imgUrl") ?? '',
     genre: formData.get("genre"),
     state: formData.get("state"),
   });
@@ -102,7 +102,7 @@ export async function updateProduct(prevState: State, formData: FormData): Promi
     price: formData.get("price"),
     format: formData.get("format"),
     descr: formData.get("description"),
-    imgUrl: formData.get("imgUrl"),
+    imgUrl: formData.get("imgUrl") ?? '',
     genre: formData.get("genre"),
     state: formData.get("state"),
   });
@@ -165,7 +165,7 @@ const FormSchema = z.object({
     invalid_type_error: 'Por favor elija un formato.',
   }),
   imgUrl: z.string()
-    .url({ message: "Ingrese una URL válida" })
+    .url({ message: "Debe seleccionar una imagen" })
     .refine(url => url.startsWith("https://res.cloudinary.com"), {
       message: "ingrese una URL de Cloudinary",
     }),

@@ -7,6 +7,7 @@ import SuccessAlert from "../../components/SuccessAlert";
 import ErrorAlert from "../../components/ErrorAlert";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
+import { CldUploadWidget, CloudinaryUploadWidgetInfo } from 'next-cloudinary';
 
 function SubmitButton() {
     const { pending } = useFormStatus();
@@ -40,13 +41,8 @@ export default function ProductEditForm({ product }: { product: Product }) {
     const DEFAULT_IMG: string = "/default_image.png";
     const [imageUrl, setImageUrl] = useState(product.image)
 
-    function handleImgPreview(event: ChangeEvent<HTMLInputElement>) {
-        const newUrl = event?.target.value;
-        if (newUrl.startsWith('https://res.cloudinary.com')) {
-            setImageUrl(newUrl);
-        }
-        else
-            setImageUrl(DEFAULT_IMG)
+    async function handleImageClick(secure_url: string) {
+        setImageUrl(secure_url)
     }
 
     return (
@@ -56,7 +52,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                     <div className="flex flex-col sm:mr-4">
                         {/*album: */}
                         <div>
-                            <label htmlFor ="name" className="mb-2">
+                            <label htmlFor="name" className="mb-2">
                                 Nombre del álbum:
                             </label>
                             <input
@@ -77,7 +73,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*artista: */}
                         <div>
-                            <label htmlFor ="artist" className="mb-2">
+                            <label htmlFor="artist" className="mb-2">
                                 Artista:
                             </label>
                             <input
@@ -98,7 +94,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*precio: */}
                         <div>
-                            <label htmlFor ="price" className="mb-2">
+                            <label htmlFor="price" className="mb-2">
                                 Precio:
                             </label>
                             <input
@@ -119,7 +115,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*formato: */}
                         <div>
-                            <label htmlFor ="format" className="mb-2">
+                            <label htmlFor="format" className="mb-2">
                                 Formato:
                             </label>
                             <select className="select select-bordered select-sm w-full min-w-lg max-w-lg"
@@ -144,7 +140,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*genero: */}
                         <div className="flex flex-col">
-                            <label htmlFor ="genre" className="mb-2">
+                            <label htmlFor="genre" className="mb-2">
                                 Género:
                             </label>
                             <select className="select select-bordered select-sm w-full min-w-lg max-w-lg"
@@ -170,7 +166,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/*descripcion: */}
                         <div className="flex flex-col">
-                            <label htmlFor ="description" className="mb-2 mt-2">
+                            <label htmlFor="description" className="mb-2 mt-2">
                                 Descripción breve:
                             </label>
                             <textarea
@@ -201,19 +197,33 @@ export default function ProductEditForm({ product }: { product: Product }) {
                             width={300}
                             onError={() => setImageUrl(DEFAULT_IMG)}
                         />
+                        {/*subir imagen */}
+                        <CldUploadWidget
+                            uploadPreset="ml_default"
+                            onSuccess={(result, { widget }) => {
+                                const secure_url = (result?.info as CloudinaryUploadWidgetInfo)?.secure_url;
+                                handleImageClick(secure_url);
+                                widget.close();
+                            }}
+                            onError={() => { console.log("cloudinary error") }}
+                        >
+                            {({ open }) => {
+                                return (
+                                    <div className="flex flex-col w-full">
+                                        <button type="button" onClick={() => open()} className="btn btn-primary m-2 animate-none" aria-label="subir imagen">
+                                            Cambiar imagen
+                                        </button>
+                                    </div>
+                                );
+                            }}
+                        </CldUploadWidget>
                         {/* Url de la imagen: */}
                         <div>
-                            <label htmlFor ="imgUrl" className="mb-2">
-                                URL de imagen:
-                            </label>
                             <input
+                                type="hidden"
                                 id="imgUrl"
                                 name="imgUrl"
-                                type="text"
-                                defaultValue={product.image}
-                                className="input input-bordered input-sm w-full min-w-lg max-w-lg"
-                                aria-describedby="imageurl-error"
-                                onChange={handleImgPreview}
+                                value={imageUrl}
                             />
                             <div id="imageurl-error" aria-live="polite" aria-atomic="true" className="mb-2">
                                 {state.errors?.imgUrl &&
@@ -225,11 +235,11 @@ export default function ProductEditForm({ product }: { product: Product }) {
                         </div>
                         {/* checkbox habilitar producto: */}
                         <div className="form-control">
-                            <label htmlFor ="state" className="label cursor-pointer flex items-center justify-start">
+                            <label htmlFor="state" className="label cursor-pointer flex items-center justify-start">
                                 <input
                                     id="state"
                                     type="checkbox"
-                                    defaultChecked = {product.state}
+                                    defaultChecked={product.state}
                                     name="state"
                                     className="checkbox mr-2" />
                                 <span className="label-text">Habilitado para la compra</span>
@@ -244,7 +254,7 @@ export default function ProductEditForm({ product }: { product: Product }) {
                 </div>
                 <input
                     type="hidden"
-                    id = "product_id"
+                    id="product_id"
                     name="product_id"
                     value={product.product_id}
                 />
